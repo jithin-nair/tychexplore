@@ -13,6 +13,14 @@
         <spring.version>4.3.5.RELEASE</spring.version>
     </properties>
     <dependencies>
+        
+        <dependency>
+            <groupId>net.tychecash.explorer</groupId>
+            <artifactId>service</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+                
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
