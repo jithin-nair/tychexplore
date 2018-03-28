@@ -86,6 +86,12 @@
             <version>3.5</version>
         </dependency>
 
+        <dependency>
+            <groupId>net.tychecash.explorer</groupId>
+            <artifactId>common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     
     <build>
