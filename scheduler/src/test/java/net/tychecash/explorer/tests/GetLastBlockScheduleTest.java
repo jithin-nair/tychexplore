@@ -28,17 +28,4 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 public class GetLastBlockScheduleTest {
 
-    @Test
-    protected void test(Scheduler scheduler) throws Exception {
-        // define the job and tie it to our MyJob class
-        JobDetail job = newJob(JSONRPCBlockRequestJob.class).withIdentity("job1", "group1").build();
-
-        // Trigger the job to run now, and then repeat every 40 seconds
-        Trigger trigger = newTrigger().withIdentity("trigger1", "group1").startNow()
-                .withSchedule(simpleSchedule().withIntervalInSeconds(40).repeatForever()).build();
-
-        // Tell quartz to schedule the job using our trigger
-        scheduler.scheduleJob(job, trigger);
-    }
-
 }

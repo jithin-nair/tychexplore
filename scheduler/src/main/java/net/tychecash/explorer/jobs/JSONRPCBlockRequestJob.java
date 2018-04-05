@@ -5,18 +5,16 @@
  */
 package net.tychecash.explorer.jobs;
 
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author jithin
  */
-public class JSONRPCBlockRequestJob implements org.quartz.Job {
+@Service("jobone")
+public class JSONRPCBlockRequestJob {
 
-    @Override
-    public void execute(JobExecutionContext jec) throws JobExecutionException {
-        System.err.println("Hello World!  MyJob is executing.");
+    protected void myTask() {
+        System.out.println("This is my task");
     }
-
 }
