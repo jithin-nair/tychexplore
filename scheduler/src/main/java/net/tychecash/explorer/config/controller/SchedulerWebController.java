@@ -26,17 +26,22 @@ public class SchedulerWebController {
     @Lazy
     JobService jobService;
 
-    @RequestMapping(value = "/")
-    public String showForm(Model model) {
-        if (jobService.scheduleOneTimeJob("test", SimpleJob.class, new Date())) {
-            model.addAttribute("msg", " job started");
-        } else {
-            model.addAttribute("msg", "job stopped");
-        }
+    @RequestMapping(value = "/test")
+    public String showLogin(Model model) {
+//        if (jobService.scheduleOneTimeJob("test", SimpleJob.class, new Date())) {
+//            model.addAttribute("msg", " job started");
+//        } else {
+//            model.addAttribute("msg", "job stopped");
+//        }
         return "index";
     }
+    
+    @RequestMapping(value = "/dashboard1")
+    public String showDashboard(Model model) {
+        return "dashboard";
+    }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "/a", method = RequestMethod.POST)
     public String runJob(Model model) {
         if (jobService.isJobRunning("test")) {
             jobService.startJobNow("test");
