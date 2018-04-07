@@ -30,7 +30,7 @@
     </head>
 
     <body>
-        <form name='login' class="form-signin" action="<c:url value='/loginPage'/>" method='POST'>
+        <form name='login' class="form-signin" action="<c:url value='j_spring_security_check' />" method='POST'>
             <div class="text-center mb-4">
                 <h1 class="h3 mb-3 font-weight-normal">Scheduler Admin Login</h1>
                 <c:if test="${not empty error}"><div>${error}</div></c:if>

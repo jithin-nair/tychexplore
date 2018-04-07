@@ -3,10 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.tychecash.explorer.config.controller;
+package net.tychecash.explorer.controller;
 
-import java.util.Date;
-import net.tychecash.explorer.jobs.SimpleJob;
 import net.tychecash.explorer.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;

@@ -5,13 +5,14 @@
  */
 package net.tychecash.explorer.config;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
+
 /**
  *
  * @author jithin
@@ -20,25 +21,27 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder authenticationMgr) throws Exception {
-		authenticationMgr.inMemoryAuthentication()
-			.withUser("admin@scheduler")
-			.password("password")
-			.authorities("ROLE_ADMIN");
-	}
-	
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-			.antMatchers("/homePage").access("hasRole('ROLE_ADMIN')")
-			.and()
-				.formLogin().loginPage("/loginPage")
-				.defaultSuccessUrl("/homePage")
-				.failureUrl("/loginPage?error")
-				.usernameParameter("username").passwordParameter("password")				
-			.and()
-				.logout().logoutSuccessUrl("/loginPage?logout"); 
-		
-	}
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder authenticationMgr) throws Exception {
+        authenticationMgr.inMemoryAuthentication()
+                .withUser("admin@scheduler")
+                .password("password")
+                .authorities("ROLE_ADMIN");
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/dashboard").access("hasRole('ROLE_ADMIN')")
+                .and()
+                .formLogin().loginProcessingUrl("/j_spring_security_check")
+                .loginPage("/loginPage")
+                .defaultSuccessUrl("/dashboard")
+                .failureUrl("/loginPage?error")
+                .usernameParameter("username").passwordParameter("password")
+                .and()
+                .logout().logoutSuccessHandler(new SimpleUrlLogoutSuccessHandler()).logoutSuccessUrl("/logout").and()
+                .csrf();
+
+    }
 }
