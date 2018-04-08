@@ -6,15 +6,7 @@
 package net.tychecash.explorer.tests;
 
 import net.tychecash.explorer.config.SchedulerConfiguration;
-import org.quartz.Scheduler;
-import static org.quartz.JobBuilder.*;
-import static org.quartz.TriggerBuilder.*;
-import static org.quartz.SimpleScheduleBuilder.*;
-import net.tychecash.explorer.jobs.JSONRPCBlockRequestJob;
-import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.quartz.JobDetail;
-import org.quartz.Trigger;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 

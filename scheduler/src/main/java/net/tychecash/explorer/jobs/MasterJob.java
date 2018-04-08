@@ -1,5 +1,6 @@
 package net.tychecash.explorer.jobs;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import net.tychecash.explorer.service.JobService;
@@ -13,7 +14,7 @@ import org.quartz.UnableToInterruptJobException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
-public class SimpleJob extends QuartzJobBean implements InterruptableJob {
+public class MasterJob extends QuartzJobBean implements InterruptableJob {
 
     private volatile boolean toStopFlag = true;
 
@@ -23,7 +24,7 @@ public class SimpleJob extends QuartzJobBean implements InterruptableJob {
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         JobKey key = jobExecutionContext.getJobDetail().getKey();
-        System.out.println("Simple Job started with key :" + key.getName() + ", Group :" + key.getGroup() + " , Thread Name :" + Thread.currentThread().getName());
+        System.out.println("Master Job started with key :" + key.getName() + ", Group :" + key.getGroup() + " , Thread Name :" + Thread.currentThread().getName());
 
         System.out.println("======================================");
         System.out.println("Accessing annotation example: " + jobService.getAllJobs());
@@ -35,6 +36,8 @@ public class SimpleJob extends QuartzJobBean implements InterruptableJob {
         JobDataMap dataMap = jobExecutionContext.getMergedJobDataMap();
         String myValue = dataMap.getString("myKey");
         System.out.println("Value:" + myValue);
+        
+        jobService.scheduleCronJob("RecentTychBlockRequestJob", RecentTychBlockRequestJob.class, new Date(), "0/10 0/1 * 1/1 * ? *");
 
         //*********** For retrieving stored object, It will try to deserialize the bytes Object. ***********/
         /*

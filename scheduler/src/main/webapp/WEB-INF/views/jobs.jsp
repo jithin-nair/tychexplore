@@ -1,7 +1,7 @@
 <%-- 
-    Document   : dashboard
-    Created on : Apr 6, 2018, 2:24:58 PM
-    Author     : jithin
+    Document   : jobs
+    Created on : 8 Apr, 2018, 12:36:43 PM
+    Author     : Jithin
 --%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -87,7 +87,37 @@
                     </div>
                 </nav>
 
-                <h2><span class="fa fa-dashboard"></span> Dashboard</h2>
+                <h2><span class="fa fa-tasks"></span> Jobs</h2>
+                <table class="table table-dark">
+                    <thead>
+                        <tr>
+                            <th>Job Name</th>
+                            <th>Group Name</th>
+                            <th>Schedule Time</th>
+                            <th>Last Fire Time</th>
+                            <th>Next Fire Time</th>
+                            <th>Status</th>
+                            <th colspan="4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${jobList}" var="job"> 
+                            <tr>
+                                <td><c:out value="${job.jobName}" /></td>
+                                <td><c:out value="${job.groupName}" /></td>
+                                <td><c:out value="${job.scheduleTime}" /></td>
+                                <td><c:out value="${job.lastFiredTime}" /></td>
+                                <td><c:out value="${job.nextFireTime}" /></td>
+                                <td><c:out value="${job.jobStatus}" /></td>
+                                <td><c:out value="${job.jobStatus}" /></td>
+                                <td><c:out value="${job.jobStatus}" /></td>
+                                <td><c:out value="${job.jobStatus}" /></td>
+                                <td><c:out value="${job.jobStatus}" /></td>
+                            </tr> 
+                        </c:forEach>
+
+                    </tbody>
+                </table>
 
             </div>
         </div>
@@ -112,4 +142,3 @@
 
     </body>
 </html>
-

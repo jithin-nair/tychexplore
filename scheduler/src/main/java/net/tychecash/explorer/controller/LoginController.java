@@ -50,7 +50,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
-    public ModelAndView homePage() {
+    public ModelAndView showDashboard() {
 
         ModelAndView model = new ModelAndView();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
