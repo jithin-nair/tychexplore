@@ -6,13 +6,13 @@
 package net.tychecash.explorer.jobs;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import net.tychecash.explorer.model.Block;
+
 import net.tychecash.explorer.model.response.BlockResponse;
+import net.tychecash.explorer.service.BlockService;
 import net.tychecash.explorer.service.JobService;
 import net.tychecash.explorer.service.TycheExploreService;
 import org.quartz.InterruptableJob;
-import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobKey;
@@ -33,6 +33,9 @@ public class RecentTychBlockRequestJob extends QuartzJobBean implements Interrup
 
     @Autowired
     TycheExploreService tycheExploreService;
+    
+    @Autowired
+    BlockService blockService;
 
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
@@ -40,6 +43,10 @@ public class RecentTychBlockRequestJob extends QuartzJobBean implements Interrup
         System.out.println("RecentTychBlockRequestJob started with key :" + key.getName() + ", Group :" + key.getGroup() + " , Thread Name :" + Thread.currentThread().getName() + " ,Time now :" + new Date());
 
         BlockResponse blockResponse = tycheExploreService.getLastBlockResponse();
+        
+        Block block = new Block();
+        block.setBlockResponse(blockResponse);
+        blockService.createBlock(block);
         
         System.out.println("Block Response "+blockResponse);
 
