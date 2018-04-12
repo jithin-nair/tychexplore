@@ -7,10 +7,12 @@ package net.tychecash.explorer.jobs;
 
 import java.util.Date;
 import net.tychecash.explorer.model.Block;
+import net.tychecash.explorer.model.LastBlockInfo;
 
 import net.tychecash.explorer.model.response.BlockResponse;
 import net.tychecash.explorer.service.BlockService;
 import net.tychecash.explorer.service.JobService;
+import net.tychecash.explorer.service.LastBlockInfoService;
 import net.tychecash.explorer.service.TycheExploreService;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.InterruptableJob;
@@ -35,23 +37,39 @@ public class BlockChainDownloadJob extends QuartzJobBean implements Interruptabl
 
     @Autowired
     TycheExploreService tycheExploreService;
-    
+
     @Autowired
     BlockService blockService;
+    
+    @Autowired
+    LastBlockInfoService lastBlockInfoService;
 
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         JobKey key = jobExecutionContext.getJobDetail().getKey();
         System.out.println("RecentTychBlockRequestJob started with key :" + key.getName() + ", Group :" + key.getGroup() + " , Thread Name :" + Thread.currentThread().getName() + " ,Time now :" + new Date());
 
-        BlockResponse blockResponse = tycheExploreService.getLastBlockResponse();
-        
-        Block block = new Block();
-        block.setBlockResponse(blockResponse);
-        blockService.createBlock(block);
-        
-        System.out.println("Block Response "+blockResponse);
+        Integer currentBlockHeight = tycheExploreService.getBlockCount().getResult().getCount();
+        Block lastBlock = null;
+        long alreadyGeneratedCoins = 0;
+        for (int i = 0; i < currentBlockHeight; i++) {
+            BlockResponse blockResponse = tycheExploreService.getBlockResponseByHeight(i);
+            
+            Block block = new Block();
+            block.setBlockResponse(blockResponse);
+            blockService.createBlock(block);
+            
+            alreadyGeneratedCoins = alreadyGeneratedCoins + Long.parseLong(block.getBlockResponse().getResult().getBlock_header().getReward());
+            lastBlock = block;
 
+            System.out.println("Block Response " + blockResponse);
+            currentBlockHeight = tycheExploreService.getBlockCount().getResult().getCount();
+        }
+        LastBlockInfo lastBlockInfo = new LastBlockInfo();
+        lastBlockInfo.setBlockResponse(lastBlock.getBlockResponse());
+        lastBlockInfo.setAlreadyGeneratedCoins(alreadyGeneratedCoins);
+        lastBlockInfoService.createBlock(lastBlockInfo);
+        
         System.out.println("Thread: " + Thread.currentThread().getName() + " stopped.");
     }
 

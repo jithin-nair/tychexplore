@@ -3,6 +3,8 @@ package net.tychecash.explorer.jobs;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.tychecash.explorer.service.JobService;
 
 import org.quartz.InterruptableJob;
@@ -38,8 +40,6 @@ public class MasterJob extends QuartzJobBean implements InterruptableJob {
         System.out.println("Value:" + myValue);
         
         jobService.scheduleOneTimeJob("BlockChainDownloadJob", BlockChainDownloadJob.class, new Date());
-        
-        jobService.scheduleCronJob("RecentTychBlockRequestJob", RecentTychBlockRequestJob.class, new Date(), "0/10 0/1 * 1/1 * ? *");
 
         //*********** For retrieving stored object, It will try to deserialize the bytes Object. ***********/
         /*
@@ -55,6 +55,14 @@ public class MasterJob extends QuartzJobBean implements InterruptableJob {
             try {
                 System.out.println("Test Job Running... Thread Name :" + Thread.currentThread().getName());
                 Thread.sleep(2000);
+                if(!jobService.isJobRunning("BlockChainDownloadJob")&&jobService.getJobState("BlockChainDownloadJob").equalsIgnoreCase("COMPLETE")){
+                    jobService.scheduleCronJob("RecentTychBlockRequestJob", RecentTychBlockRequestJob.class, new Date(), "0/2 0/1 * 1/1 * ? *");
+                    try {
+                        interrupt();
+                    } catch (UnableToInterruptJobException ex) {
+                        Logger.getLogger(MasterJob.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
