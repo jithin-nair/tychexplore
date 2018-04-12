@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 
 
 import net.tychecash.explorer.config.TycheExploreConfig;
+import net.tychecash.explorer.model.CountVO;
 import net.tychecash.explorer.model.ResponseVO;
 import net.tychecash.explorer.model.request.BlockRequest;
 import net.tychecash.explorer.model.request.Params;
@@ -154,6 +155,21 @@ public class TycheExploreServiceImpl implements TycheExploreService {
         responseVO.setBlockHeaders(blockHeaders);
         responseVO.setStatus("SUCCESS");
         return responseVO;
+    }
+
+    @Override
+    public CountVO getBlockCount() {
+        BlockRequest blockRequest = new BlockRequest();
+        blockRequest.setId("self");
+        blockRequest.setJsonrpc("2.0");
+        blockRequest.setMethod("getblockcount");
+        Params params = new Params();
+        blockRequest.setParams(params);
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        String uri = tycheExploreConfig.getRpcServerUrl();
+        CountVO countVO = restTemplate.postForObject(uri, blockRequest, CountVO.class);
+        return countVO;
     }
 
 }

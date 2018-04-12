@@ -37,6 +37,8 @@ public class MasterJob extends QuartzJobBean implements InterruptableJob {
         String myValue = dataMap.getString("myKey");
         System.out.println("Value:" + myValue);
         
+        jobService.scheduleOneTimeJob("BlockChainDownloadJob", BlockChainDownloadJob.class, new Date());
+        
         jobService.scheduleCronJob("RecentTychBlockRequestJob", RecentTychBlockRequestJob.class, new Date(), "0/10 0/1 * 1/1 * ? *");
 
         //*********** For retrieving stored object, It will try to deserialize the bytes Object. ***********/

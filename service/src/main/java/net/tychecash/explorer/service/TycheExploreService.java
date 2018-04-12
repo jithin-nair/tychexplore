@@ -5,6 +5,7 @@
  */
 package net.tychecash.explorer.service;
 
+import net.tychecash.explorer.model.CountVO;
 import net.tychecash.explorer.model.ResponseVO;
 import net.tychecash.explorer.model.response.BlockResponse;
 
@@ -25,4 +26,6 @@ public interface TycheExploreService {
     public ResponseVO getLastNBlockResponseFromHeight(Integer height, Integer pageNumber, Integer size);
 
     public ResponseVO getBlockSamples(Integer samplingRate);
+
+    public CountVO getBlockCount();
 }

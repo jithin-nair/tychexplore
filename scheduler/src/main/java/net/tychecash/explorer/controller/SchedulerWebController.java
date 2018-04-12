@@ -8,7 +8,6 @@ package net.tychecash.explorer.controller;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import net.tychecash.explorer.jobs.CronJob;
 import net.tychecash.explorer.jobs.MasterJob;
 import net.tychecash.explorer.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -15,6 +15,8 @@ public class Result {
 
     private BlockHeader block_header;
 
+    private Integer count;
+
     public String getStatus() {
         return status;
     }
@@ -29,6 +31,14 @@ public class Result {
 
     public void setBlock_header(BlockHeader block_header) {
         this.block_header = block_header;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
     @Override
