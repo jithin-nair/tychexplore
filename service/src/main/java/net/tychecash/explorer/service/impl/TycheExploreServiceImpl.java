@@ -50,7 +50,7 @@ public class TycheExploreServiceImpl implements TycheExploreService {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         String uri = tycheExploreConfig.getJsonRpcServerUrl();
-        BlockResponse blockResponse = restTemplate.postForObject("http://127.0.0.1:26026/json_rpc", blockRequest, BlockResponse.class);
+        BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
         return blockResponse;
         // Tools | Templates.
     }
@@ -164,8 +164,8 @@ public class TycheExploreServiceImpl implements TycheExploreService {
     public CountVO getBlockCount() {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-        String uri = "http://localhost:26026/getheight";
-        String result = restTemplate.getForObject(uri, String.class);
+        String uri = tycheExploreConfig.getHttpRpcServerUrl();
+        String result = restTemplate.getForObject(uri+"getheight", String.class);
         Gson gson = new Gson();
         CountVO countVO = gson.fromJson(result, CountVO.class);
         return countVO;

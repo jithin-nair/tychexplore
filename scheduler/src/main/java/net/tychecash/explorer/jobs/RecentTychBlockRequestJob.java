@@ -46,9 +46,9 @@ public class RecentTychBlockRequestJob extends QuartzJobBean implements Interrup
         
         Block block = new Block();
         block.setBlockResponse(blockResponse);
-        blockService.createBlock(block);
+        //blockService.createBlock(block);
         
-        System.out.println("Block Response "+blockResponse);
+        System.out.println("Block Response "+blockResponse.toString());
 
         System.out.println("Thread: " + Thread.currentThread().getName() + " stopped.");
     }

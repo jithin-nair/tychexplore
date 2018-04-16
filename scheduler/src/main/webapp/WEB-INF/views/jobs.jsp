@@ -109,10 +109,33 @@
                                 <td><c:out value="${job.lastFiredTime}" /></td>
                                 <td><c:out value="${job.nextFireTime}" /></td>
                                 <td><c:out value="${job.jobStatus}" /></td>
-                                <td><c:out value="${job.jobStatus}" /></td>
-                                <td><c:out value="${job.jobStatus}" /></td>
-                                <td><c:out value="${job.jobStatus}" /></td>
-                                <td><c:out value="${job.jobStatus}" /></td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test = "${job.jobStatus == 'NOT RUNNING'}">
+                                            <a href="/jobs/${job.jobName.type}/start" class="btn btn-success">
+                                                <span class="fa fa-play"></span> Start
+                                            </a>
+                                        </c:when>
+                                    </c:choose>
+                                </td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test = "${job.jobStatus == 'NOT RUNNING'}">
+                                            <a href="/jobs/${job.jobName.type}/pause" class="btn btn-warning">
+                                                <span class="fa fa-pause"></span> Pause
+                                            </a>
+                                        </c:when>
+                                    </c:choose>
+                                </td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test = "${job.jobStatus == 'NOT RUNNING'}">
+                                            <a href="/jobs/${job.jobName.type}/stop" class="btn btn-danger">
+                                                <span class="fa fa-stop"></span> Stop
+                                            </a>
+                                        </c:when>
+                                    </c:choose>
+                                </td>
                             </tr> 
                         </c:forEach>
 

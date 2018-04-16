@@ -6,8 +6,10 @@
 package net.tychecash.explorer.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import net.tychecash.explorer.constants.JobNamesEnum;
 import net.tychecash.explorer.jobs.MasterJob;
 import net.tychecash.explorer.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +29,11 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class SchedulerWebController {
-    
+
     @Autowired
     @Lazy
     JobService jobService;
-    
+
     @RequestMapping(value = "/jobs/{jobname}/start", method = RequestMethod.GET)
     public ModelAndView startOneTimeJob(ModelAndView modelAndView, @PathVariable("jobname") String jobname) {
         if (!jobService.isJobRunning(jobname) && jobService.startJobNow(jobname) && jobService.isJobWithNamePresent(jobname)) {
@@ -42,7 +44,7 @@ public class SchedulerWebController {
         modelAndView.setViewName("jobs");
         return modelAndView;
     }
-    
+
     @RequestMapping(value = "/jobs/{jobname}/stop", method = RequestMethod.GET)
     public ModelAndView stopOneTimeJob(ModelAndView modelAndView, @PathVariable("jobname") String jobname) {
         if (jobService.isJobRunning(jobname) && jobService.stopJob(jobname) && jobService.isJobWithNamePresent(jobname)) {
@@ -53,15 +55,23 @@ public class SchedulerWebController {
         modelAndView.setViewName("jobs");
         return modelAndView;
     }
-    
+
     @RequestMapping(value = "/jobs/listjobs", method = RequestMethod.GET)
     public ModelAndView listJobs(ModelAndView modelAndView) {
         List<Map<String, Object>> jobList = jobService.getAllJobs();
         if (jobList == null || jobList.isEmpty()) {
-            jobService.scheduleOneTimeJob("MasterJob", MasterJob.class, new Date());
-            jobList = jobService.getAllJobs();
+            for (JobNamesEnum jobNamesEnum : JobNamesEnum.values()) {
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("jobName", jobNamesEnum);
+                map.put("groupName", "SampleGroup");
+                map.put("scheduleTime", "");
+                map.put("lastFiredTime", "");
+                map.put("nextFireTime", "");
+                map.put("jobStatus", "NOT RUNNING");
+                jobList.add(map);
+            }
         }
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.isAuthenticated()) {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             modelAndView.addObject("username", userDetails.getUsername());
@@ -70,7 +80,7 @@ public class SchedulerWebController {
         } else {
             modelAndView.setViewName("index");
         }
-        
+
         return modelAndView;
     }
 }

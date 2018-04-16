@@ -55,8 +55,10 @@ public class MasterJob extends QuartzJobBean implements InterruptableJob {
             try {
                 System.out.println("Test Job Running... Thread Name :" + Thread.currentThread().getName());
                 Thread.sleep(2000);
-                if(!jobService.isJobRunning("BlockChainDownloadJob")&&jobService.getJobState("BlockChainDownloadJob").equalsIgnoreCase("COMPLETE")){
-                    //jobService.scheduleCronJob("RecentTychBlockRequestJob", RecentTychBlockRequestJob.class, new Date(), "0/2 0/1 * 1/1 * ? *");
+                boolean c1 = jobService.isJobRunning("BlockChainDownloadJob");
+                boolean c2 = jobService.getJobState("BlockChainDownloadJob").equalsIgnoreCase("COMPLETE");
+                if(!c1&&c2){
+                    jobService.scheduleCronJob("RecentTychBlockRequestJob", RecentTychBlockRequestJob.class, new Date(), "0/2 0/1 * 1/1 * ? *");
                     try {
                         interrupt();
                     } catch (UnableToInterruptJobException ex) {
