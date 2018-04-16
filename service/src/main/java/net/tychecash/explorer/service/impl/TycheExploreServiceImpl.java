@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import com.google.gson.Gson;
 
 import net.tychecash.explorer.config.TycheExploreConfig;
 import net.tychecash.explorer.model.CountVO;
@@ -24,12 +24,15 @@ import net.tychecash.explorer.model.response.BlockResponse;
 import net.tychecash.explorer.service.TycheExploreService;
 import net.tychecash.explorer.util.BlockUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author jithin
  */
-@Component
+@Service
+@Transactional
 public class TycheExploreServiceImpl implements TycheExploreService {
 
     @Autowired
@@ -46,8 +49,8 @@ public class TycheExploreServiceImpl implements TycheExploreService {
         blockRequest.setParams(params);
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-        String uri = tycheExploreConfig.getRpcServerUrl();
-        BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
+        String uri = tycheExploreConfig.getJsonRpcServerUrl();
+        BlockResponse blockResponse = restTemplate.postForObject("http://127.0.0.1:26026/json_rpc", blockRequest, BlockResponse.class);
         return blockResponse;
         // Tools | Templates.
     }
@@ -63,7 +66,7 @@ public class TycheExploreServiceImpl implements TycheExploreService {
         blockRequest.setParams(params);
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-        String uri = tycheExploreConfig.getRpcServerUrl();
+        String uri = tycheExploreConfig.getJsonRpcServerUrl();
         BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
         return blockResponse;
 
@@ -82,7 +85,7 @@ public class TycheExploreServiceImpl implements TycheExploreService {
         blockRequest.setMethod("getlastblockheader");
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-        String uri = tycheExploreConfig.getRpcServerUrl();
+        String uri = tycheExploreConfig.getJsonRpcServerUrl();
         BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
         return blockResponse;
     }
@@ -91,7 +94,7 @@ public class TycheExploreServiceImpl implements TycheExploreService {
     public ResponseVO getLastNBlockResponseFromHeight(Integer height, Integer pageNumber, Integer size) throws RuntimeException {
         ResponseVO responseVO = new ResponseVO();
         List<BlockResponse> blockResponses = new ArrayList<BlockResponse>();
-        String uri = tycheExploreConfig.getRpcServerUrl();
+        String uri = tycheExploreConfig.getJsonRpcServerUrl();
         BlockRequest blockRequest = new BlockRequest();
         blockRequest.setId("self");
         blockRequest.setJsonrpc("2.0");
@@ -128,7 +131,7 @@ public class TycheExploreServiceImpl implements TycheExploreService {
         Integer lastBlockHeight = lastBlockResponse.getResult().getBlock_header().getHeight();
         List<Integer> blockSamples = BlockUtil.getAllBlockSamples(samplingRate, lastBlockHeight);
         List<BlockResponse> blockResponses = new ArrayList<BlockResponse>();
-        String uri = tycheExploreConfig.getRpcServerUrl();
+        String uri = tycheExploreConfig.getJsonRpcServerUrl();
         BlockRequest blockRequest = new BlockRequest();
         blockRequest.setId("self");
         blockRequest.setJsonrpc("2.0");
@@ -159,16 +162,12 @@ public class TycheExploreServiceImpl implements TycheExploreService {
 
     @Override
     public CountVO getBlockCount() {
-        BlockRequest blockRequest = new BlockRequest();
-        blockRequest.setId("self");
-        blockRequest.setJsonrpc("2.0");
-        blockRequest.setMethod("getblockcount");
-        Params params = new Params();
-        blockRequest.setParams(params);
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-        String uri = tycheExploreConfig.getRpcServerUrl();
-        CountVO countVO = restTemplate.postForObject(uri, blockRequest, CountVO.class);
+        String uri = "http://localhost:26026/getheight";
+        String result = restTemplate.getForObject(uri, String.class);
+        Gson gson = new Gson();
+        CountVO countVO = gson.fromJson(result, CountVO.class);
         return countVO;
     }
 

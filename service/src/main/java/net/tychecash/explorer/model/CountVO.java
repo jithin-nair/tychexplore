@@ -5,42 +5,31 @@
  */
 package net.tychecash.explorer.model;
 
-import net.tychecash.explorer.model.response.Result;
-
 /**
  *
  * @author Jithin
  */
 public class CountVO {
 
-    private String id;
+    private String status;
+    
+    private Integer height;
 
-    private String jsonrpc;
-
-    private Result result;
-
-    public String getId() {
-        return id;
+    public String getStatus() {
+        return status;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getJsonrpc() {
-        return jsonrpc;
+    public Integer getHeight() {
+        return height;
     }
 
-    public void setJsonrpc(String jsonrpc) {
-        this.jsonrpc = jsonrpc;
+    public void setHeight(Integer height) {
+        this.height = height;
     }
-
-    public Result getResult() {
-        return result;
-    }
-
-    public void setResult(Result result) {
-        this.result = result;
-    }
-
+    
+    
 }

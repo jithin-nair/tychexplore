@@ -49,9 +49,9 @@ public class BlockChainDownloadJob extends QuartzJobBean implements Interruptabl
         JobKey key = jobExecutionContext.getJobDetail().getKey();
         System.out.println("RecentTychBlockRequestJob started with key :" + key.getName() + ", Group :" + key.getGroup() + " , Thread Name :" + Thread.currentThread().getName() + " ,Time now :" + new Date());
 
-        Integer currentBlockHeight = tycheExploreService.getBlockCount().getResult().getCount();
+        Integer currentBlockHeight = tycheExploreService.getBlockCount().getHeight();
         Block lastBlock = null;
-        long alreadyGeneratedCoins = 0;
+        double alreadyGeneratedCoins = 0;
         for (int i = 0; i < currentBlockHeight; i++) {
             BlockResponse blockResponse = tycheExploreService.getBlockResponseByHeight(i);
             
@@ -59,15 +59,17 @@ public class BlockChainDownloadJob extends QuartzJobBean implements Interruptabl
             block.setBlockResponse(blockResponse);
             blockService.createBlock(block);
             
-            alreadyGeneratedCoins = alreadyGeneratedCoins + Long.parseLong(block.getBlockResponse().getResult().getBlock_header().getReward());
+            String val = block.getBlockResponse().getResult().getBlock_header().getReward();
+            double x = Double.parseDouble(val);
+            alreadyGeneratedCoins = alreadyGeneratedCoins + x;
             lastBlock = block;
 
             System.out.println("Block Response " + blockResponse);
-            currentBlockHeight = tycheExploreService.getBlockCount().getResult().getCount();
+            currentBlockHeight = tycheExploreService.getBlockCount().getHeight();
         }
         LastBlockInfo lastBlockInfo = new LastBlockInfo();
         lastBlockInfo.setBlockResponse(lastBlock.getBlockResponse());
-        lastBlockInfo.setAlreadyGeneratedCoins(alreadyGeneratedCoins);
+        lastBlockInfo.setAlreadyGeneratedCoins((long)alreadyGeneratedCoins);
         lastBlockInfoService.createBlock(lastBlockInfo);
         
         System.out.println("Thread: " + Thread.currentThread().getName() + " stopped.");

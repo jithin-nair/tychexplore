@@ -6,6 +6,7 @@
 package net.tychecash.explorer.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
@@ -14,18 +15,31 @@ import org.springframework.context.annotation.PropertySource;
  * @author jithin
  */
 @Configuration
+@ComponentScan(basePackages = {"net.tychecash.explorer"})
 @PropertySource("classpath:tychexplore.properties")
 public class TycheExploreConfig {
 
-    @Value("${RPC_SERVER_URL}")
-    private String rpcServerUrl;
+    @Value("${JSON_RPC_SERVER_URL}")
+    private String jsonRpcServerUrl;
 
-    public String getRpcServerUrl() {
-        return rpcServerUrl;
+    @Value("${HTTP_RPC_SERVER_URL}")
+    private String httpRpcServerUrl;
+
+    public String getJsonRpcServerUrl() {
+        return jsonRpcServerUrl;
     }
 
-    public void setRpcServerUrl(String rpcServerUrl) {
-        this.rpcServerUrl = rpcServerUrl;
+    public void setJsonRpcServerUrl(String jsonRpcServerUrl) {
+        this.jsonRpcServerUrl = jsonRpcServerUrl;
     }
 
+    public String getHttpRpcServerUrl() {
+        return httpRpcServerUrl;
+    }
+
+    public void setHttpRpcServerUrl(String httpRpcServerUrl) {
+        this.httpRpcServerUrl = httpRpcServerUrl;
+    }
+    
+    
 }
