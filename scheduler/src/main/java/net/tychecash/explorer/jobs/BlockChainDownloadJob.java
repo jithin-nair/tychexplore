@@ -5,6 +5,8 @@
  */
 package net.tychecash.explorer.jobs;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Date;
 import net.tychecash.explorer.model.Block;
 import net.tychecash.explorer.model.LastBlockInfo;
@@ -51,7 +53,8 @@ public class BlockChainDownloadJob extends QuartzJobBean implements Interruptabl
 
         Integer currentBlockHeight = tycheExploreService.getBlockCount().getHeight();
         Block lastBlock = null;
-        double alreadyGeneratedCoins = 0;
+        BigDecimal alreadyGeneratedCoins = new BigDecimal(0);
+        MathContext mc = new MathContext(14);
         for (int i = 0; i < currentBlockHeight; i++) {
             BlockResponse blockResponse = tycheExploreService.getBlockResponseByHeight(i);
             
@@ -60,8 +63,8 @@ public class BlockChainDownloadJob extends QuartzJobBean implements Interruptabl
             blockService.createBlock(block);
             
             String val = block.getBlockResponse().getResult().getBlock_header().getReward();
-            double x = Double.parseDouble(val);
-            alreadyGeneratedCoins = alreadyGeneratedCoins + x;
+            BigDecimal value = BigDecimal.valueOf(Double.parseDouble(val));
+            alreadyGeneratedCoins = alreadyGeneratedCoins.add(value, mc);
             lastBlock = block;
 
             System.out.println("Block Response " + blockResponse);
@@ -69,7 +72,7 @@ public class BlockChainDownloadJob extends QuartzJobBean implements Interruptabl
         }
         LastBlockInfo lastBlockInfo = new LastBlockInfo();
         lastBlockInfo.setBlockResponse(lastBlock.getBlockResponse());
-        lastBlockInfo.setAlreadyGeneratedCoins((long)alreadyGeneratedCoins);
+        lastBlockInfo.setAlreadyGeneratedCoins(alreadyGeneratedCoins);
         lastBlockInfoService.createBlock(lastBlockInfo);
         
         System.out.println("Thread: " + Thread.currentThread().getName() + " stopped.");

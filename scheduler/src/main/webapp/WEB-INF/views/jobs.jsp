@@ -112,7 +112,7 @@
                                 <td>
                                     <c:choose>
                                         <c:when test = "${job.jobStatus == 'NOT RUNNING'}">
-                                            <a href="/jobs/${job.jobName.type}/start" class="btn btn-success">
+                                            <a href="${contextPath}/jobs/${job.jobName.type}/start" class="btn btn-success">
                                                 <span class="fa fa-play"></span> Start
                                             </a>
                                         </c:when>
@@ -121,7 +121,7 @@
                                 <td>
                                     <c:choose>
                                         <c:when test = "${job.jobStatus == 'NOT RUNNING'}">
-                                            <a href="/jobs/${job.jobName.type}/pause" class="btn btn-warning">
+                                            <a href="${contextPath}/jobs/${job.jobName.type}/pause" class="btn btn-warning">
                                                 <span class="fa fa-pause"></span> Pause
                                             </a>
                                         </c:when>
@@ -130,7 +130,7 @@
                                 <td>
                                     <c:choose>
                                         <c:when test = "${job.jobStatus == 'NOT RUNNING'}">
-                                            <a href="/jobs/${job.jobName.type}/stop" class="btn btn-danger">
+                                            <a href="${contextPath}/jobs/${job.jobName.type}/stop" class="btn btn-danger">
                                                 <span class="fa fa-stop"></span> Stop
                                             </a>
                                         </c:when>

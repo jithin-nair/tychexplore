@@ -5,6 +5,7 @@
  */
 package net.tychecash.explorer.model;
 
+import java.math.BigDecimal;
 import net.tychecash.explorer.model.response.BlockResponse;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -21,7 +22,7 @@ public class LastBlockInfo {
 
     private BlockResponse blockResponse;
 
-    private Long alreadyGeneratedCoins;
+    private BigDecimal alreadyGeneratedCoins;
 
     public String getId() {
         return id;
@@ -39,12 +40,11 @@ public class LastBlockInfo {
         this.blockResponse = blockResponse;
     }
 
-    public Long getAlreadyGeneratedCoins() {
+    public BigDecimal getAlreadyGeneratedCoins() {
         return alreadyGeneratedCoins;
     }
 
-    public void setAlreadyGeneratedCoins(Long alreadyGeneratedCoins) {
+    public void setAlreadyGeneratedCoins(BigDecimal alreadyGeneratedCoins) {
         this.alreadyGeneratedCoins = alreadyGeneratedCoins;
     }
-
 }
