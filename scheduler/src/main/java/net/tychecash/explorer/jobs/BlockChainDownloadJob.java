@@ -54,7 +54,7 @@ public class BlockChainDownloadJob extends QuartzJobBean implements Interruptabl
         Integer currentBlockHeight = tycheExploreService.getBlockCount().getHeight();
         Block lastBlock = null;
         BigDecimal alreadyGeneratedCoins = new BigDecimal(0);
-        MathContext mc = new MathContext(14);
+        MathContext mc = new MathContext(20);
         for (int i = 0; i < currentBlockHeight; i++) {
             BlockResponse blockResponse = tycheExploreService.getBlockResponseByHeight(i);
             

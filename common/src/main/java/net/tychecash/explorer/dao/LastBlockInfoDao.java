@@ -19,4 +19,5 @@ public interface LastBlockInfoDao {
 
     public LastBlockInfo findBlock(LastBlockInfo block);
 
+    public LastBlockInfo findLastBlock();
 }

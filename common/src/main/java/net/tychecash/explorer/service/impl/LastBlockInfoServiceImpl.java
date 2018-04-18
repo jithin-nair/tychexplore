@@ -41,4 +41,9 @@ public class LastBlockInfoServiceImpl implements LastBlockInfoService {
         return lastBlockInfoDao.findBlock(block);
     }
 
+    @Override
+    public LastBlockInfo findLastBlock() {
+        return lastBlockInfoDao.findLastBlock();
+    }
+
 }

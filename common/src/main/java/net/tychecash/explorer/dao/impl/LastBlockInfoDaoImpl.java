@@ -6,8 +6,10 @@
 package net.tychecash.explorer.dao.impl;
 
 import net.tychecash.explorer.dao.LastBlockInfoDao;
+import net.tychecash.explorer.model.Block;
 import net.tychecash.explorer.model.LastBlockInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -39,6 +41,13 @@ public class LastBlockInfoDaoImpl implements LastBlockInfoDao {
     public LastBlockInfo findBlock(LastBlockInfo block) {
         Query query = new Query(Criteria.where("_id").is(block.getId()));
         return mongoTemplate.findOne(query, LastBlockInfo.class, COLLECTION);
+    }
+
+    @Override
+    public LastBlockInfo findLastBlock() {
+        Query query = new Query();
+        query.limit(1);
+        return mongoTemplate.findOne(query, LastBlockInfo.class);
     }
 
 }

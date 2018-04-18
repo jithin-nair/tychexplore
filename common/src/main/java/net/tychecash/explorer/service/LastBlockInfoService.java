@@ -18,5 +18,7 @@ public interface LastBlockInfoService {
     public void updateBlock(LastBlockInfo block);
 
     public LastBlockInfo findBlock(LastBlockInfo block);
+    
+    public LastBlockInfo findLastBlock();
 
 }
