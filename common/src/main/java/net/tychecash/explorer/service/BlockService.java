@@ -19,4 +19,6 @@ public interface BlockService {
     public Block findBlock(Block block);
 
     public List<Block> findAllBlock();
+    
+    public Block findLastBlock();
 }

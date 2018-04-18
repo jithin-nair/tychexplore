@@ -6,6 +6,7 @@
 package net.tychecash.explorer.jobs;
 
 import java.util.Date;
+import net.tychecash.explorer.constants.JobNamesEnum;
 import net.tychecash.explorer.model.Block;
 
 import net.tychecash.explorer.model.response.BlockResponse;
@@ -42,6 +43,9 @@ public class RecentTychBlockRequestJob extends QuartzJobBean implements Interrup
         JobKey key = jobExecutionContext.getJobDetail().getKey();
         System.out.println("RecentTychBlockRequestJob started with key :" + key.getName() + ", Group :" + key.getGroup() + " , Thread Name :" + Thread.currentThread().getName() + " ,Time now :" + new Date());
 
+        if(!jobService.isJobRunning(JobNamesEnum.BLOCKCHAIN_DOWNLOAD_JOB.getType())){
+            
+        }
         BlockResponse blockResponse = tycheExploreService.getLastBlockResponse();
         
         Block block = new Block();

@@ -38,5 +38,10 @@ public class BlockServiceImpl implements BlockService{
     public List<Block> findAllBlock() {
         return blockDao.findAllBlock();
     }
+
+    @Override
+    public Block findLastBlock() {
+        return blockDao.findLastBlock();
+    }
     
 }
