@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 
 /**
@@ -23,7 +24,7 @@ public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder authenticationMgr) throws Exception {
-        authenticationMgr.inMemoryAuthentication()
+        authenticationMgr.inMemoryAuthentication().passwordEncoder(NoOpPasswordEncoder.getInstance())
                 .withUser("admin@scheduler")
                 .password("password")
                 .authorities("ROLE_ADMIN");
@@ -44,4 +45,5 @@ public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf();
 
     }
+
 }

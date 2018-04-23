@@ -5,17 +5,18 @@
  */
 package net.tychecash.explorer.config;
 
-import org.springframework.context.annotation.Bean;
+import net.tychecash.explorer.handler.WebSocketHandler;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 /**
  *
@@ -24,17 +25,12 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {"net.tychecash.explorer"})
-@Import(value = { LoginSecurityConfig.class })
-public class SchedulerWebConfiguration extends WebMvcConfigurerAdapter {
+@Import(value = {LoginSecurityConfig.class})
+public class SchedulerWebConfiguration implements WebMvcConfigurer {
 
-    @Bean
-    public ViewResolver viewResolver() {
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setViewClass(JstlView.class);
-        viewResolver.setPrefix("/WEB-INF/views/");
-        viewResolver.setSuffix(".jsp");
-
-        return viewResolver;
+    @Override
+    public void configureViewResolvers(ViewResolverRegistry registry) {
+        registry.jsp().prefix("/WEB-INF/views/").suffix(".jsp");
     }
 
     @Override

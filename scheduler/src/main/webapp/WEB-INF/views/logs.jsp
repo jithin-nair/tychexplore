@@ -1,7 +1,7 @@
 <%-- 
-    Document   : dashboard
-    Created on : Apr 6, 2018, 2:24:58 PM
-    Author     : jithin
+    Document   : jobs
+    Created on : 8 Apr, 2018, 12:36:43 PM
+    Author     : Jithin
 --%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -21,6 +21,9 @@
 
         <script type="text/javascript"
         src="${contextPath}/resources/scripts/jquery-1.11.1.min.js"></script>
+
+        <script src="${contextPath}/resources/scripts/sockjs.js"></script>
+        <script src="${contextPath}/resources/scripts/stomp.js"></script>
         <!-- Bootstrap core CSS -->
         <link href="${contextPath}/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -87,7 +90,21 @@
                     </div>
                 </nav>
 
-                <h2><span class="fa fa-dashboard"></span> Dashboard</h2>
+                <h2><span class="fa fa-tasks"></span> Logs</h2>
+
+                <div>
+                    <h1>Spring MVC 5 + WebSocket + Hello World example</h1>
+                    <hr />
+                    <label>Message</label>
+                    <br>
+                    <textarea rows="8" cols="50" id="clientMsg"></textarea>
+                    <br>
+                    <button onclick="send()">Send</button>
+                    <br>
+                    <label>Response from Server</label>
+                    <br>
+                    <textarea rows="8" cols="50" id="serverMsg" readonly="readonly"></textarea>
+                </div>
 
             </div>
         </div>
@@ -97,19 +114,36 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
         <script type="text/javascript">
-            $(document).ready(function () {
-                $("#sidebar").mCustomScrollbar({
-                    theme: "minimal"
-                });
+       $(document).ready(function () {
+           $("#sidebar").mCustomScrollbar({
+               theme: "minimal"
+           });
 
-                $('#sidebarCollapse').on('click', function () {
-                    $('#sidebar, #content').toggleClass('active');
-                    $('.collapse.in').toggleClass('in');
-                    $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-                });
-            });
+           $('#sidebarCollapse').on('click', function () {
+               $('#sidebar, #content').toggleClass('active');
+               $('.collapse.in').toggleClass('in');
+               $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+           });
+       });
+
+       //Open the web socket connection to the server
+       var socketConn = new WebSocket('ws://localhost:8084/scheduler/myHandler');
+
+       //Send Message
+       function send() {
+           var clientMsg = document.getElementById('clientMsg');
+           if (clientMsg.value) {
+               socketConn.send(clientMsg.value);
+               clientMsg.value = '';
+           }
+       }
+
+       // Recive Message
+       socketConn.onmessage = function (event) {
+           var serverMsg = document.getElementById('serverMsg');
+           serverMsg.value = event.data;
+       }
         </script>
 
     </body>
 </html>
-

@@ -8,24 +8,17 @@ public class SchedulerWebInitializer extends AbstractAnnotationConfigDispatcherS
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{SchedulerWebConfiguration.class};
+        return null;
     }
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return null;
+        return new Class[] { SchedulerWebConfiguration.class, SchedulerWebSocketConfig.class };
     }
 
     @Override
     protected String[] getServletMappings() {
         return new String[]{"/"};
-    }
-
-    @Override
-    protected DispatcherServlet createDispatcherServlet(WebApplicationContext servletAppContext) {
-        final DispatcherServlet dispatcherServlet = (DispatcherServlet) super.createDispatcherServlet(servletAppContext);
-        dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
-        return dispatcherServlet;
     }
 
 }

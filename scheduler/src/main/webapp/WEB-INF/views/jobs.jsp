@@ -66,7 +66,7 @@
                         <a href="${contextPath}/jobs/listjobs"><span class="fa fa-tasks"></span> Jobs</a>
                     </li>
                     <li>
-                        <a href="#"><span class="fa fa-bell-o"></span> Logs</a>
+                        <a href="${contextPath}/jobs/showLogs"><span class="fa fa-bell-o"></span> Logs</a>
                     </li>
                 </ul>
 

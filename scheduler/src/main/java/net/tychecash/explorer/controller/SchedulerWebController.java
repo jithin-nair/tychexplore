@@ -135,4 +135,17 @@ public class SchedulerWebController {
 
         return modelAndView;
     }
+    
+    @RequestMapping(value = "/jobs/showLogs", method = RequestMethod.GET)
+    public ModelAndView showLogs(ModelAndView modelAndView) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication.isAuthenticated()) {
+                UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                modelAndView.addObject("username", userDetails.getUsername());
+                modelAndView.setViewName("logs");
+            } else {
+                modelAndView.setViewName("index");
+            }
+        return modelAndView;
+    }
 }
