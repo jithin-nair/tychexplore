@@ -173,6 +173,9 @@
                     stompClient.subscribe('/topic/greetings', function (greeting) {
                         showGreeting(JSON.parse(greeting.body).content);
                     });
+                    stompClient.subscribe('/log', function (greeting) {
+                        showGreeting(JSON.parse(greeting.body).content);
+                    });
                 });
             }
 

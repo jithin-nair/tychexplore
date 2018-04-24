@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.Date;
 import net.tychecash.explorer.constants.JobNamesEnum;
+import net.tychecash.explorer.modal.Greeting;
 import net.tychecash.explorer.model.Block;
 import net.tychecash.explorer.model.LastBlockInfo;
 
@@ -23,6 +24,7 @@ import org.quartz.JobExecutionException;
 import org.quartz.JobKey;
 import org.quartz.UnableToInterruptJobException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 /**
@@ -44,6 +46,9 @@ public class RecentTychBlockRequestJob extends QuartzJobBean implements Interrup
 
     @Autowired
     LastBlockInfoService lastBlockInfoService;
+    
+    @Autowired
+    private SimpMessagingTemplate template;
 
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
@@ -68,6 +73,7 @@ public class RecentTychBlockRequestJob extends QuartzJobBean implements Interrup
                 alreadyGeneratedCoins = alreadyGeneratedCoins.add(value, mc);
 
                 System.out.println("Block Response " + blockResponse);
+                template.convertAndSend("/topic/greetings", new Greeting(blockResponse.toString()));
                 lastBlockInfo.setBlockResponse(block.getBlockResponse());
                 lastBlockInfo.setAlreadyGeneratedCoins(alreadyGeneratedCoins);
                 lastBlockInfoService.updateBlock(lastBlockInfo);

@@ -6,6 +6,7 @@
 package net.tychecash.explorer.model.response;
 
 import net.tychecash.explorer.util.BlockUtil;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 
 /**
@@ -20,12 +21,14 @@ public class BlockHeader {
 
     private String minor_version;
 
+    @Indexed(name="height", unique = true)
     private Integer height;
 
     private String reward;
 
     private String nonce;
 
+    @Indexed(name="hash", unique = true)
     private String hash;
 
     private String major_version;
