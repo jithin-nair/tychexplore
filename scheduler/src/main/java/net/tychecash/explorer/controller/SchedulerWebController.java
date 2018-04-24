@@ -13,9 +13,13 @@ import net.tychecash.explorer.constants.JobNamesEnum;
 import net.tychecash.explorer.jobs.BlockChainDownloadJob;
 import net.tychecash.explorer.jobs.MasterJob;
 import net.tychecash.explorer.jobs.RecentTychBlockRequestJob;
+import net.tychecash.explorer.modal.Greeting;
+import net.tychecash.explorer.modal.HelloMessage;
 import net.tychecash.explorer.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +28,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.HtmlUtils;
 
 /**
  *
@@ -147,5 +152,12 @@ public class SchedulerWebController {
                 modelAndView.setViewName("index");
             }
         return modelAndView;
+    }
+    
+    @MessageMapping("/hello")
+    @SendTo("/topic/greetings")
+    public Greeting greeting(HelloMessage message) throws Exception {
+        Thread.sleep(1000); // simulated delay
+        return new Greeting("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
     }
 }

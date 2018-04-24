@@ -8,12 +8,12 @@ public class SchedulerWebInitializer extends AbstractAnnotationConfigDispatcherS
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return null;
+        return new Class[]{SchedulerWebConfiguration.class};
     }
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[] { SchedulerWebConfiguration.class, SchedulerWebSocketConfig.class };
+        return new Class[]{SchedulerWebSocketConfig.class};
     }
 
     @Override

@@ -7,8 +7,8 @@ package net.tychecash.explorer.config;
 
 import java.io.IOException;
 import java.util.Properties;
-import net.tychecash.explorer.service.JobsListener;
-import net.tychecash.explorer.service.TriggerListener;
+import net.tychecash.explorer.listener.JobsListener;
+import net.tychecash.explorer.listener.TriggerListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.ApplicationContext;

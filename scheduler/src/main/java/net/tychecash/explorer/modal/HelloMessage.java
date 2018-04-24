@@ -9,16 +9,23 @@ package net.tychecash.explorer.modal;
  *
  * @author Jithin
  */
-public class Result {
+public class HelloMessage {
 
-    private String result;
+    private String name;
 
-    public String getResult() {
-        return result;
+    public HelloMessage() {
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public HelloMessage(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

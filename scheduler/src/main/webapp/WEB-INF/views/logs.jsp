@@ -93,17 +93,42 @@
                 <h2><span class="fa fa-tasks"></span> Logs</h2>
 
                 <div>
-                    <h1>Spring MVC 5 + WebSocket + Hello World example</h1>
-                    <hr />
-                    <label>Message</label>
-                    <br>
-                    <textarea rows="8" cols="50" id="clientMsg"></textarea>
-                    <br>
-                    <button onclick="send()">Send</button>
-                    <br>
-                    <label>Response from Server</label>
-                    <br>
-                    <textarea rows="8" cols="50" id="serverMsg" readonly="readonly"></textarea>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form class="form-inline">
+                                <div class="form-group">
+                                    <label for="connect">WebSocket connection:</label>
+                                    <button id="connect" class="btn btn-default" type="submit">Connect</button>
+                                    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <form class="form-inline">
+                                <div class="form-group">
+                                    <label for="name">What is your name?</label>
+                                    <input type="text" id="name" class="form-control" placeholder="Your name here...">
+                                </div>
+                                <button id="send" class="btn btn-default" type="submit">Send</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="conversation" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Greetings</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="greetings">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
@@ -114,35 +139,74 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
         <script type="text/javascript">
-       $(document).ready(function () {
-           $("#sidebar").mCustomScrollbar({
-               theme: "minimal"
-           });
+            $(document).ready(function () {
+                $("#sidebar").mCustomScrollbar({
+                    theme: "minimal"
+                });
 
-           $('#sidebarCollapse').on('click', function () {
-               $('#sidebar, #content').toggleClass('active');
-               $('.collapse.in').toggleClass('in');
-               $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-           });
-       });
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar, #content').toggleClass('active');
+                    $('.collapse.in').toggleClass('in');
+                    $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+                });
+            });
 
-       //Open the web socket connection to the server
-       var socketConn = new WebSocket('ws://localhost:8084/scheduler/myHandler');
+            var stompClient = null;
 
-       //Send Message
-       function send() {
-           var clientMsg = document.getElementById('clientMsg');
-           if (clientMsg.value) {
-               socketConn.send(clientMsg.value);
-               clientMsg.value = '';
-           }
-       }
+            function setConnected(connected) {
+                $("#connect").prop("disabled", connected);
+                $("#disconnect").prop("disabled", !connected);
+                if (connected) {
+                    $("#conversation").show();
+                } else {
+                    $("#conversation").hide();
+                }
+                $("#greetings").html("");
+            }
 
-       // Recive Message
-       socketConn.onmessage = function (event) {
-           var serverMsg = document.getElementById('serverMsg');
-           serverMsg.value = event.data;
-       }
+            function connect() {
+                var socket = new SockJS('http://localhost:8084/scheduler/gs-guide-websocket');
+                stompClient = Stomp.over(socket);
+                stompClient.connect({}, function (frame) {
+                    setConnected(true);
+                    console.log('Connected: ' + frame);
+                    stompClient.subscribe('/topic/greetings', function (greeting) {
+                        showGreeting(JSON.parse(greeting.body).content);
+                    });
+                });
+            }
+
+            function disconnect() {
+                if (stompClient !== null) {
+                    stompClient.disconnect();
+                }
+                setConnected(false);
+                console.log("Disconnected");
+            }
+
+            function sendName() {
+                stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#name").val()}));
+            }
+
+            function showGreeting(message) {
+                $("#greetings").append("<tr><td>" + message + "</td></tr>");
+            }
+
+            $(function () {
+                $("form").on('submit', function (e) {
+                    e.preventDefault();
+                });
+                $("#connect").click(function () {
+                    connect();
+                });
+                $("#disconnect").click(function () {
+                    disconnect();
+                });
+                $("#send").click(function () {
+                    sendName();
+                });
+            });
+
         </script>
 
     </body>
