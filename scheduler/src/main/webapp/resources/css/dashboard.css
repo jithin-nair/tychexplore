@@ -1,11 +1,22 @@
+@import url(//fonts.googleapis.com/css?family=Roboto+Condensed:400,700);
+@import url(//fonts.googleapis.com/css?family=Roboto:400,300,500,700);
+@import url(//fonts.googleapis.com/css?family=Inconsolata);
+
 body {
-  font-size: .875rem;
+    font-family: 'Roboto', Helvetica, Arial, sans-serif;
+    font-size: .875rem;
+    line-height: 1.428571429;
+    margin: 0px;
+    padding: 0px;
+    margin-bottom: 85px;
+    font-size: 16px;
+    overflow-y: scroll;
 }
 
 .feather {
-  width: 16px;
-  height: 16px;
-  vertical-align: text-bottom;
+    width: 16px;
+    height: 16px;
+    vertical-align: text-bottom;
 }
 
 /*
@@ -13,47 +24,47 @@ body {
  */
 
 .sidebar {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 100; /* Behind the navbar */
-  padding: 0;
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100; /* Behind the navbar */
+    padding: 0;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
 }
 
 .sidebar-sticky {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 48px; /* Height of navbar */
-  height: calc(100vh - 48px);
-  padding-top: .5rem;
-  overflow-x: hidden;
-  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    position: -webkit-sticky;
+    position: sticky;
+    top: 48px; /* Height of navbar */
+    height: calc(100vh - 48px);
+    padding-top: .5rem;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
 }
 
 .sidebar .nav-link {
-  font-weight: 500;
-  color: #333;
+    font-weight: 500;
+    color: #333;
 }
 
 .sidebar .nav-link .feather {
-  margin-right: 4px;
-  color: #999;
+    margin-right: 4px;
+    color: #999;
 }
 
 .sidebar .nav-link.active {
-  color: #007bff;
+    color: #007bff;
 }
 
 .sidebar .nav-link:hover .feather,
 .sidebar .nav-link.active .feather {
-  color: inherit;
+    color: inherit;
 }
 
 .sidebar-heading {
-  font-size: .75rem;
-  text-transform: uppercase;
+    font-size: .75rem;
+    text-transform: uppercase;
 }
 
 /*
@@ -61,28 +72,28 @@ body {
  */
 
 .navbar-brand {
-  padding-top: .75rem;
-  padding-bottom: .75rem;
-  font-size: 1rem;
-  background-color: rgba(0, 0, 0, .25);
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+    font-size: 1rem;
+    background-color: rgba(0, 0, 0, .25);
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
 }
 
 .navbar .form-control {
-  padding: .75rem 1rem;
-  border-width: 0;
-  border-radius: 0;
+    padding: .75rem 1rem;
+    border-width: 0;
+    border-radius: 0;
 }
 
 .form-control-dark {
-  color: #fff;
-  background-color: rgba(255, 255, 255, .1);
-  border-color: rgba(255, 255, 255, .1);
+    color: #fff;
+    background-color: rgba(255, 255, 255, .1);
+    border-color: rgba(255, 255, 255, .1);
 }
 
 .form-control-dark:focus {
-  border-color: transparent;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+    border-color: transparent;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
 }
 
 /*
@@ -91,3 +102,179 @@ body {
 
 .border-top { border-top: 1px solid #e5e5e5; }
 .border-bottom { border-bottom: 1px solid #e5e5e5; }
+
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    font-family: 'Roboto Condensed', Arial, sans-serif;
+}
+h3,.h3 {
+    font-size: 32px;
+    margin-bottom: 14px;
+}
+code {
+    color: lightblue;
+    background-color: #3C3C3C;
+    padding: 2px 10px;
+    border-radius: 0;
+}
+
+/* Footer */
+footer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #262626;
+    font-size: 14px;
+    color: #efefef;
+}
+footer a {
+    color: #6ED5EE;
+}
+footer > div{
+    color: #fff;
+    margin: 10px auto;
+    text-align: center;
+}
+
+
+/* Top Bar */
+#top-bar { 
+    background-color: #0274a8;
+    line-height: 50px;
+    display: block;
+    font-size: 17px;
+    color: #fff;
+    padding: 0 15px;
+    z-index: 1000;
+}
+#top-bar div {
+    display: inline-block;
+    padding: 0 15px;
+}
+#top-bar div > span {
+    font-weight: 700;
+}
+#top-bar #statsUpdated {
+    font-weight: normal;
+}
+@media (min-width: 992px) {
+    #top-bar {
+        overflow: auto;
+        position: fixed;
+        top: 0px;
+        left: 225px;
+        right: 0px;
+        padding: 0 15px;
+    }
+}
+@media (max-width: 767px) {
+    #top-bar {
+        display: none;
+    }
+}
+
+/* jQuery sparkline tooltip */
+.jqstooltip {
+    border: none !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+    border-radius: 2px !important;
+    margin-top: -20px !important;
+    /* Override Bootstrap defaults to fix jQuery.Sparkline tooltips appearance */
+    -webkit-box-sizing: content-box !important;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box !important;
+}
+.jqstooltip .jqsfield {
+    color: #ccc;
+    font-size: 13px !important;
+}
+.jqstooltip .jqsfield b {
+    color: #fff;
+}
+
+/* Info box */
+.infoBox {
+    background-color: #03a9f4;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    height: 80px;  
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 30px;
+    border-radius: 3px;
+}
+@media (max-width: 767px){
+    .infoBox{
+        margin-bottom: 15px;
+    }
+}
+.infoBox .icon {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    text-align: center;
+    font-size: 60px;
+    line-height: 60px;
+    width: 75px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.3);
+}
+.infoBox .content {
+    display: inline-block;
+    padding: 7px 16px;
+}
+.infoBox .content .text {
+    font-size: 13px;
+    margin-top: 11px;
+    color: #fff;
+    text-transform: uppercase;
+}
+.infoBox .content .value {
+    font-size: 26px;
+    font-weight: 800;
+    margin-top: -4px;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+}
+.infoBox .content .value .smallText {
+    font-size: 18px;
+    font-weight: normal;
+}
+
+/* Hash info box */
+.hashInfo {
+    background-color: #014e71;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    cursor: default;
+    padding: 15px;
+    border-radius: 3px;
+    color: #fff;
+}
+.hashInfo .text {
+    font-size: 13px;
+    color: #fff;
+    text-transform: uppercase;
+}
+.hashInfo .content {
+    overflow: hidden;
+}
+.hashInfo .content .value {
+    float: left;
+    font-family: 'Inconsolata', monospace;
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+    padding-right: 8px;
+    text-overflow: ellipsis;
+}
+.hashInfo .content .value a {
+    color: #fff;
+}
+.hashInfo .content .time {
+    float: left;
+    font-size: 15px;
+    font-weight: normal;
+}
+

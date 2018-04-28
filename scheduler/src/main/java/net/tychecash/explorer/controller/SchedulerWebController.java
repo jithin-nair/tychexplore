@@ -5,6 +5,7 @@
  */
 package net.tychecash.explorer.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +41,22 @@ public class SchedulerWebController {
     @Autowired
     @Lazy
     JobService jobService;
+    
+    @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+    public ModelAndView showDashboard(ModelAndView modelAndView) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication.isAuthenticated()) {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            List<Map<String, Object>> jobList = jobService.getAllJobs();
+            modelAndView.addObject("username", userDetails.getUsername());
+            modelAndView.addObject("jobList", jobList);
+            modelAndView.setViewName("dashboard");
+        } else {
+            modelAndView.setViewName("index");
+        }
+        return modelAndView;
+    }
 
     @RequestMapping(value = "/jobs/{jobname}/start", method = RequestMethod.GET)
     public ModelAndView startOneTimeJob(ModelAndView modelAndView, @PathVariable("jobname") String jobname) {
@@ -115,7 +132,7 @@ public class SchedulerWebController {
 
     @RequestMapping(value = "/jobs/listjobs", method = RequestMethod.GET)
     public ModelAndView listJobs(ModelAndView modelAndView) {
-        List<Map<String, Object>> jobList = jobService.getAllJobs();
+        List<Map<String, Object>> jobList = new ArrayList<>();
         if (jobList == null || jobList.isEmpty()) {
             for (JobNamesEnum jobNamesEnum : JobNamesEnum.values()) {
                 Map<String, Object> map = new HashMap<String, Object>();

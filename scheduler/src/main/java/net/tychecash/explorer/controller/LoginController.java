@@ -47,21 +47,4 @@ public class LoginController {
         model.setViewName("index");
         return model;
     }
-
-    @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
-    public ModelAndView showDashboard() {
-
-        ModelAndView model = new ModelAndView();
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication.isAuthenticated()) {
-            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            model.addObject("username", userDetails.getUsername());
-            model.setViewName("dashboard");
-        } else {
-            model.setViewName("index");
-        }
-        return model;
-    }
-
 }

@@ -79,15 +79,16 @@
             <div id="content">
 
                 <nav class="navbar navbar-default">
-                    <div class="container-fluid">
-
-                        <div class="navbar-header">
-                            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                                <i class="fa fa-expand"></i>
-                            </button>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="navbar-header">
+                                <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                                    <i class="fa fa-expand"></i>
+                                </button>
+                            </div>
                         </div>
-
                     </div>
+
                 </nav>
 
                 <h2><span class="fa fa-tasks"></span> Logs</h2>
@@ -96,22 +97,22 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <form class="form-inline">
+                            <div class="form-inline">
                                 <div class="form-group">
-                                    <label for="connect">WebSocket connection:</label>
-                                    <button id="connect" class="btn btn-default" type="submit">Connect</button>
-                                    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
+                                    <label for="connect">WebSocket connection: &nbsp;</label>
+                                    <button id="connect" class="btn btn-success" type="button">Connect</button>&nbsp;
+                                    <button id="disconnect" class="btn btn-warning" type="button" disabled="disabled">Disconnect
                                     </button>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <form class="form-inline">
                                 <div class="form-group">
-                                    <label for="name">What is your name?</label>
-                                    <input type="text" id="name" class="form-control" placeholder="Your name here...">
+                                    <label for="name">Websocket echo test:</label>
+                                    <input type="text" id="name" class="form-control" placeholder="Type something here...">&nbsp;
                                 </div>
-                                <button id="send" class="btn btn-default" type="submit">Send</button>
+                                <button id="send" class="btn btn-dark" type="button">Send</button>
                             </form>
                         </div>
                     </div>
@@ -120,7 +121,7 @@
                             <table id="conversation" class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Greetings</th>
+                                        <th>Logs</th>
                                     </tr>
                                 </thead>
                                 <tbody id="greetings">
@@ -196,9 +197,6 @@
             }
 
             $(function () {
-                $("form").on('submit', function (e) {
-                    e.preventDefault();
-                });
                 $("#connect").click(function () {
                     connect();
                 });

@@ -76,18 +76,52 @@
             <div id="content">
 
                 <nav class="navbar navbar-default">
-                    <div class="container-fluid">
-
-                        <div class="navbar-header">
-                            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                                <i class="fa fa-expand"></i>
-                            </button>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="navbar-header">
+                                <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                                    <i class="fa fa-expand"></i>
+                                </button>
+                            </div>
                         </div>
-
                     </div>
                 </nav>
 
                 <h2><span class="fa fa-dashboard"></span> Dashboard</h2>
+                <div id="page">
+                    <div id="poolStats" class="row">
+                        <c:forEach items="${jobList}" var="job"> 
+                            <div class="col-lg-3 col-sm-4">
+                                <div class="infoBox hoverExpandEffect">
+                                    <div class="icon">
+                                        <span class="fa fa-history"></span>
+                                    </div>
+                                    <div class="content">
+                                        <div class="text"><c:out value="${job.jobName}" /></div>
+                                        <div class="value"><span id="blockSolvedTime"><c:out value="${job.jobStatus}" /></span> 
+                                            <span class="smallText">
+                                                <c:out value="${job.groupName}" />
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+
+                        <!-- Last Hash -->
+                        <div class="col-sm-12">
+                            <div class="hashInfo hoverExpandEffect">
+                                <div class="text">Last Hash</div>
+                                <div class="content clearfix">
+                                    <div class="value"><a id="lastHash" target="_blank" href="http://chainradar.com/tych/block/d17975fa4f225208ab78c085637835e8ee2d1d2492540638fcc73f318e43b9e6">d17975fa4f225208ab78c085637835e8ee2d1d2492540638fcc73f318e43b9e6</a></div>
+                                    <div class="time">(<span id="networkLastBlockFound">6 minutes ago</span>)</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
         </div>

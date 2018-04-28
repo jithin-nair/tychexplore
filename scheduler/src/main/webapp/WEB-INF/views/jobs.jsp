@@ -76,14 +76,14 @@
             <div id="content">
 
                 <nav class="navbar navbar-default">
-                    <div class="container-fluid">
-
-                        <div class="navbar-header">
-                            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                                <i class="fa fa-expand"></i>
-                            </button>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="navbar-header">
+                                <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                                    <i class="fa fa-expand"></i>
+                                </button>
+                            </div>
                         </div>
-
                     </div>
                 </nav>
 
