@@ -29,7 +29,7 @@ public class SchedulerWebSocketConfig implements WebSocketMessageBrokerConfigure
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/gs-guide-websocket").withSockJS();
+        registry.addEndpoint("/scheduler_websocket").withSockJS();
     }
 
 }

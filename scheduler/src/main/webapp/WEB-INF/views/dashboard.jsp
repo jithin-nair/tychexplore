@@ -21,6 +21,9 @@
 
         <script type="text/javascript"
         src="${contextPath}/resources/scripts/jquery-1.11.1.min.js"></script>
+        
+        <script src="${contextPath}/resources/scripts/sockjs.js"></script>
+        <script src="${contextPath}/resources/scripts/stomp.js"></script>
         <!-- Bootstrap core CSS -->
         <link href="${contextPath}/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -111,10 +114,14 @@
                         <!-- Last Hash -->
                         <div class="col-sm-12">
                             <div class="hashInfo hoverExpandEffect">
-                                <div class="text">Last Hash</div>
+                                <div class="text">
+                                    Recent Block <span class="smallText" id="lastHeight"></span>
+                                </div>
                                 <div class="content clearfix">
-                                    <div class="value"><a id="lastHash" target="_blank" href="http://chainradar.com/tych/block/d17975fa4f225208ab78c085637835e8ee2d1d2492540638fcc73f318e43b9e6">d17975fa4f225208ab78c085637835e8ee2d1d2492540638fcc73f318e43b9e6</a></div>
-                                    <div class="time">(<span id="networkLastBlockFound">6 minutes ago</span>)</div>
+                                    <div class="value">
+                                        <a id="lastHash" target="_blank" href="http://explorer.tychecash.net/"></a>
+                                    </div>
+                                    <div class="time">(<span id="networkLastBlockFound"></span>)</div>
                                 </div>
                             </div>
                         </div>
@@ -131,17 +138,44 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
         <script type="text/javascript">
-            $(document).ready(function () {
-                $("#sidebar").mCustomScrollbar({
-                    theme: "minimal"
-                });
-
-                $('#sidebarCollapse').on('click', function () {
-                    $('#sidebar, #content').toggleClass('active');
-                    $('.collapse.in').toggleClass('in');
-                    $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-                });
+        $(document).ready(function () {
+            $("#sidebar").mCustomScrollbar({
+                theme: "minimal"
             });
+
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar, #content').toggleClass('active');
+                $('.collapse.in').toggleClass('in');
+                $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+            });
+            
+            connect();
+
+            function connect() {
+                var socket = new SockJS('${contextPath}/scheduler_websocket');
+                stompClient = Stomp.over(socket);
+                stompClient.connect({}, function (frame) {
+                    console.log('Connected: ' + frame);
+                    stompClient.subscribe('/topic/recentblock', function (recentblock) {
+                        showDetails(JSON.parse(recentblock.body));
+                    });
+                });
+            }
+
+            function disconnect() {
+                if (stompClient !== null) {
+                    stompClient.disconnect();
+                }
+                console.log("Disconnected");
+            }
+
+            function showDetails(block) {
+                $("#lastHash").text(block.hash);
+                $("#lastHeight").text("(Height : "+block.height+" )");
+                $("#networkLastBlockFound").text(new Date(block.foundDate * 1000).toGMTString());
+                $("#lastHash").prop("href", "http://explorer.tychecash.net/block/"+block.hash)
+            }
+        });
         </script>
 
     </body>

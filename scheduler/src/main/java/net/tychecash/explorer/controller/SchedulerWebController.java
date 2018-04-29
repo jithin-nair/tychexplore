@@ -14,9 +14,12 @@ import net.tychecash.explorer.constants.JobNamesEnum;
 import net.tychecash.explorer.jobs.BlockChainDownloadJob;
 import net.tychecash.explorer.jobs.MasterJob;
 import net.tychecash.explorer.jobs.RecentTychBlockRequestJob;
-import net.tychecash.explorer.modal.Greeting;
-import net.tychecash.explorer.modal.HelloMessage;
+import net.tychecash.explorer.model.BlockDetails;
+import net.tychecash.explorer.model.Logs;
+import net.tychecash.explorer.model.HelloMessage;
+import net.tychecash.explorer.model.response.BlockResponse;
 import net.tychecash.explorer.service.JobService;
+import net.tychecash.explorer.service.TycheExploreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -41,6 +44,9 @@ public class SchedulerWebController {
     @Autowired
     @Lazy
     JobService jobService;
+    
+    @Autowired
+    TycheExploreService tycheExploreService;
     
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
     public ModelAndView showDashboard(ModelAndView modelAndView) {
@@ -70,7 +76,7 @@ public class SchedulerWebController {
             }
             if (jobName != null) {
                 if (jobName.equals(JobNamesEnum.MASTER_JOB.name())) {
-                    jobService.scheduleOneTimeJob(jobname, MasterJob.class, new Date());
+                    jobService.scheduleCronJob(jobname, MasterJob.class, new Date(),"0/10 0/1 * 1/1 * ? *");
                 }
                 if (jobName.equals(JobNamesEnum.BLOCKCHAIN_DOWNLOAD_JOB.name())) {
                     jobService.scheduleOneTimeJob(jobname, BlockChainDownloadJob.class, new Date());
@@ -79,33 +85,8 @@ public class SchedulerWebController {
                     jobService.scheduleCronJob(jobname, RecentTychBlockRequestJob.class, new Date(), "0/2 0/1 * 1/1 * ? *");
                 }
             }
-            List<Map<String, Object>> jobList = jobService.getAllJobs();
-            if (jobList == null || jobList.isEmpty()) {
-                for (JobNamesEnum jobNamesEnum : JobNamesEnum.values()) {
-                    Map<String, Object> map = new HashMap<String, Object>();
-                    map.put("jobName", jobNamesEnum);
-                    map.put("groupName", "SampleGroup");
-                    map.put("scheduleTime", "");
-                    map.put("lastFiredTime", "");
-                    map.put("nextFireTime", "");
-                    map.put("jobStatus", "NOT RUNNING");
-                    jobList.add(map);
-                }
-            }
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (authentication.isAuthenticated()) {
-                UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-                modelAndView.addObject("username", userDetails.getUsername());
-                modelAndView.addObject("jobList", jobList);
-                modelAndView.setViewName("jobs");
-            } else {
-                modelAndView.setViewName("index");
-            }
-            modelAndView.addObject("isStarted", Boolean.TRUE);
-        } else {
-            modelAndView.addObject("isStarted", Boolean.FALSE);
         }
-        modelAndView.setViewName("jobs");
+        modelAndView.setViewName("redirect:/jobs/listjobs");
         return modelAndView;
     }
 
@@ -122,26 +103,27 @@ public class SchedulerWebController {
             if (jobName != null) {
                 jobService.stopJob(jobname);
             }
-            modelAndView.addObject("isStopped", Boolean.TRUE);
-        } else {
-            modelAndView.addObject("isStopped", Boolean.FALSE);
         }
-        modelAndView.setViewName("jobs");
+        modelAndView.setViewName("redirect:/jobs/listjobs");
         return modelAndView;
     }
 
     @RequestMapping(value = "/jobs/listjobs", method = RequestMethod.GET)
     public ModelAndView listJobs(ModelAndView modelAndView) {
         List<Map<String, Object>> jobList = new ArrayList<>();
-        if (jobList == null || jobList.isEmpty()) {
+        if (jobList.isEmpty()) {
             for (JobNamesEnum jobNamesEnum : JobNamesEnum.values()) {
                 Map<String, Object> map = new HashMap<String, Object>();
+                String jobStatus = "NOT RUNNING";
                 map.put("jobName", jobNamesEnum);
                 map.put("groupName", "SampleGroup");
                 map.put("scheduleTime", "");
                 map.put("lastFiredTime", "");
                 map.put("nextFireTime", "");
-                map.put("jobStatus", "NOT RUNNING");
+                if(jobService.getJobState(jobNamesEnum.getType())!=null){
+                    jobStatus = jobService.getJobState(jobNamesEnum.getType());
+                }
+                map.put("jobStatus", jobStatus);
                 jobList.add(map);
             }
         }
@@ -171,10 +153,19 @@ public class SchedulerWebController {
         return modelAndView;
     }
     
-    @MessageMapping("/hello")
-    @SendTo("/topic/greetings")
-    public Greeting greeting(HelloMessage message) throws Exception {
-        Thread.sleep(1000); // simulated delay
-        return new Greeting("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
+    @MessageMapping("/logs")
+    @SendTo("/topic/logs")
+    public Logs getLogs(HelloMessage message) throws Exception {
+        return new Logs("Test , " + HtmlUtils.htmlEscape(message.getName()) + "!");
+    }
+    
+    @MessageMapping("/recentblock")
+    @SendTo("/topic/recentblock")
+    public BlockDetails getBlockDetails() throws Exception {
+        BlockResponse blockResponse = tycheExploreService.getLastBlockResponse();
+        String height = blockResponse.getResult().getBlock_header().getHeight().toString();
+        String hash = blockResponse.getResult().getBlock_header().getHash();
+        String foundDate = blockResponse.getResult().getBlock_header().getTimestamp();
+        return new BlockDetails(height, hash, foundDate);
     }
 }

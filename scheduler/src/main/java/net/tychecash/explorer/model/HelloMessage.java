@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.tychecash.explorer.modal;
+package net.tychecash.explorer.model;
 
 /**
  *

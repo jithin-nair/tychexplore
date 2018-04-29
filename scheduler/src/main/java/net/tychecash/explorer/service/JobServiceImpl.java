@@ -370,6 +370,7 @@ public class JobServiceImpl implements JobService {
     /**
      * Get the current state of job
      */
+    @Override
     public String getJobState(String jobName) {
         System.out.println("JobServiceImpl.getJobState()");
 
@@ -403,6 +404,8 @@ public class JobServiceImpl implements JobService {
         } catch (SchedulerException e) {
             System.out.println("SchedulerException while checking job with name and group exist:" + e.getMessage());
             e.printStackTrace();
+        } catch (NullPointerException exception){
+            return null;
         }
         return null;
     }

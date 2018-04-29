@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.Date;
 import net.tychecash.explorer.constants.JobNamesEnum;
-import net.tychecash.explorer.modal.Greeting;
+import net.tychecash.explorer.model.Logs;
 import net.tychecash.explorer.model.Block;
 import net.tychecash.explorer.model.LastBlockInfo;
 
@@ -73,7 +73,7 @@ public class RecentTychBlockRequestJob extends QuartzJobBean implements Interrup
                 alreadyGeneratedCoins = alreadyGeneratedCoins.add(value, mc);
 
                 System.out.println("Block Response " + blockResponse);
-                template.convertAndSend("/topic/greetings", new Greeting(blockResponse.toString()));
+                template.convertAndSend("/topic/logs", new Logs(blockResponse.toString()));
                 lastBlockInfo.setBlockResponse(block.getBlockResponse());
                 lastBlockInfo.setAlreadyGeneratedCoins(alreadyGeneratedCoins);
                 lastBlockInfoService.updateBlock(lastBlockInfo);

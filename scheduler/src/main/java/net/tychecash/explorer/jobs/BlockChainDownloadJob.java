@@ -8,6 +8,7 @@ package net.tychecash.explorer.jobs;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.Date;
+import net.tychecash.explorer.model.Logs;
 import net.tychecash.explorer.model.Block;
 import net.tychecash.explorer.model.LastBlockInfo;
 
@@ -23,6 +24,7 @@ import org.quartz.JobExecutionException;
 import org.quartz.JobKey;
 import org.quartz.UnableToInterruptJobException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 /**
@@ -45,6 +47,9 @@ public class BlockChainDownloadJob extends QuartzJobBean implements Interruptabl
     
     @Autowired
     LastBlockInfoService lastBlockInfoService;
+    
+    @Autowired
+    private SimpMessagingTemplate template;
 
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
@@ -68,6 +73,7 @@ public class BlockChainDownloadJob extends QuartzJobBean implements Interruptabl
             lastBlock = block;
 
             System.out.println("Block Response " + blockResponse);
+            template.convertAndSend("/topic/logs", new Logs(blockResponse.toString()));
             currentBlockHeight = tycheExploreService.getBlockCount().getHeight();
         }
         LastBlockInfo lastBlockInfo = new LastBlockInfo();

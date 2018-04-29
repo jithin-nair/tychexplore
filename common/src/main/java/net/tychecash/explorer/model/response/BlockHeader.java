@@ -5,7 +5,7 @@
  */
 package net.tychecash.explorer.model.response;
 
-import net.tychecash.explorer.util.BlockUtil;
+import java.math.BigInteger;
 import org.springframework.data.mongodb.core.index.Indexed;
 
 
@@ -24,7 +24,7 @@ public class BlockHeader {
     @Indexed(name="height", unique = true)
     private Integer height;
 
-    private String reward;
+    private BigInteger reward;
 
     private String nonce;
 
@@ -71,13 +71,15 @@ public class BlockHeader {
         this.height = height;
     }
 
-    public String getReward() {
+    public BigInteger getReward() {
         return reward;
     }
 
-    public void setReward(String reward) {
-        this.reward = BlockUtil.insertCharAt(reward, '.', 8);
+    public void setReward(BigInteger reward) {
+        this.reward = reward;
     }
+
+    
 
     public String getNonce() {
         return nonce;

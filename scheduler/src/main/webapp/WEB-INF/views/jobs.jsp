@@ -116,24 +116,39 @@
                                                 <span class="fa fa-play"></span> Start
                                             </a>
                                         </c:when>
+                                        <c:otherwise>
+                                            <a href="${contextPath}/jobs/${job.jobName.type}/start" class="btn btn-success disabled">
+                                                <span class="fa fa-play"></span> Start
+                                            </a>
+                                        </c:otherwise>
                                     </c:choose>
                                 </td>
                                 <td>
                                     <c:choose>
                                         <c:when test = "${job.jobStatus == 'NOT RUNNING'}">
-                                            <a href="${contextPath}/jobs/${job.jobName.type}/pause" class="btn btn-warning">
+                                            <a href="${contextPath}/jobs/${job.jobName.type}/pause" class="btn btn-warning disabled">
                                                 <span class="fa fa-pause"></span> Pause
                                             </a>
                                         </c:when>
+                                        <c:otherwise>
+                                            <a href="${contextPath}/jobs/${job.jobName.type}/pause" class="btn btn-warning">
+                                                <span class="fa fa-pause"></span> Pause
+                                            </a>
+                                        </c:otherwise>
                                     </c:choose>
                                 </td>
                                 <td>
                                     <c:choose>
                                         <c:when test = "${job.jobStatus == 'NOT RUNNING'}">
-                                            <a href="${contextPath}/jobs/${job.jobName.type}/stop" class="btn btn-danger">
+                                            <a href="${contextPath}/jobs/${job.jobName.type}/stop" class="btn btn-danger disabled">
                                                 <span class="fa fa-stop"></span> Stop
                                             </a>
                                         </c:when>
+                                        <c:otherwise>
+                                            <a href="${contextPath}/jobs/${job.jobName.type}/stop" class="btn btn-danger">
+                                                <span class="fa fa-stop"></span> Stop
+                                            </a>
+                                        </c:otherwise>
                                     </c:choose>
                                 </td>
                             </tr> 

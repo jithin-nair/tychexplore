@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.tychecash.explorer.modal;
+package net.tychecash.explorer.model;
 
 /**
  *
  * @author Jithin
  */
-public class Greeting {
+public class Logs {
 
     private String content;
 
-    public Greeting() {
+    public Logs() {
     }
 
-    public Greeting(String content) {
+    public Logs(String content) {
         this.content = content;
     }
 

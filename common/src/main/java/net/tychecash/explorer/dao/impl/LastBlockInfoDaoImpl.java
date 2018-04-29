@@ -6,10 +6,8 @@
 package net.tychecash.explorer.dao.impl;
 
 import net.tychecash.explorer.dao.LastBlockInfoDao;
-import net.tychecash.explorer.model.Block;
 import net.tychecash.explorer.model.LastBlockInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;

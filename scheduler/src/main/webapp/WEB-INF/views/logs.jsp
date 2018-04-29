@@ -124,7 +124,7 @@
                                         <th>Logs</th>
                                     </tr>
                                 </thead>
-                                <tbody id="greetings">
+                                <tbody id="logs">
                                 </tbody>
                             </table>
                         </div>
@@ -162,20 +162,17 @@
                 } else {
                     $("#conversation").hide();
                 }
-                $("#greetings").html("");
+                $("#logs").html("");
             }
 
             function connect() {
-                var socket = new SockJS('http://localhost:8084/scheduler/gs-guide-websocket');
+                var socket = new SockJS('${contextPath}/scheduler_websocket');
                 stompClient = Stomp.over(socket);
                 stompClient.connect({}, function (frame) {
                     setConnected(true);
                     console.log('Connected: ' + frame);
-                    stompClient.subscribe('/topic/greetings', function (greeting) {
-                        showGreeting(JSON.parse(greeting.body).content);
-                    });
-                    stompClient.subscribe('/log', function (greeting) {
-                        showGreeting(JSON.parse(greeting.body).content);
+                    stompClient.subscribe('/topic/logs', function (logs) {
+                        showLogs(JSON.parse(logs.body).content);
                     });
                 });
             }
@@ -189,11 +186,11 @@
             }
 
             function sendName() {
-                stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#name").val()}));
+                stompClient.send("/app/logs", {}, JSON.stringify({'name': $("#name").val()}));
             }
 
-            function showGreeting(message) {
-                $("#greetings").append("<tr><td>" + message + "</td></tr>");
+            function showLogs(message) {
+                $("#logs").append("<tr><td>" + message + "</td></tr>");
             }
 
             $(function () {

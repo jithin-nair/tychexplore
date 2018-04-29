@@ -5,10 +5,7 @@
  */
 package net.tychecash.explorer.service.impl;
 
-import java.util.List;
-import net.tychecash.explorer.dao.BlockDao;
 import net.tychecash.explorer.dao.LastBlockInfoDao;
-import net.tychecash.explorer.model.Block;
 import net.tychecash.explorer.model.LastBlockInfo;
 import net.tychecash.explorer.service.LastBlockInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
