@@ -5,9 +5,10 @@
  */
 package net.tychecash.explorer.service.impl;
 
-import net.tychecash.explorer.model.CountVO;
-import net.tychecash.explorer.model.ResponseVO;
-import net.tychecash.explorer.model.response.BlockResponse;
+import net.tychecash.explorer.service.service.impl.TycheExploreServiceImpl;
+import net.tychecash.explorer.service.model.CountVO;
+import net.tychecash.explorer.service.model.ResponseVO;
+import net.tychecash.explorer.service.model.response.BlockResponse;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -20,28 +21,29 @@ import static org.junit.Assert.*;
  * @author Jithin
  */
 public class TycheExploreServiceImplTest {
-    
+
     public TycheExploreServiceImplTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
 
     /**
-     * Test of getBlockResponseByHeight method, of class TycheExploreServiceImpl.
+     * Test of getBlockResponseByHeight method, of class
+     * TycheExploreServiceImpl.
      */
     @Test
     public void testGetBlockResponseByHeight() {
@@ -99,7 +101,8 @@ public class TycheExploreServiceImplTest {
     }
 
     /**
-     * Test of getLastNBlockResponseFromHeight method, of class TycheExploreServiceImpl.
+     * Test of getLastNBlockResponseFromHeight method, of class
+     * TycheExploreServiceImpl.
      */
     @Test
     public void testGetLastNBlockResponseFromHeight() {
@@ -143,5 +146,5 @@ public class TycheExploreServiceImplTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+
 }
