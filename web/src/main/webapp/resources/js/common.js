@@ -95,4 +95,25 @@ $(document).ready(function () {
             }]
     });
     
+        $.ajax({
+        type: "GET",
+        contentType: "application/json",
+        url: "/restapi/totalMinedCoins?_=" + new Date().getTime(),
+        dataType: 'json',
+        success: function (data) {
+            var json = data;
+            $("#bTotalCoinsDiv").append("<input type='hidden' value='"+json.inWords.toString()+"' id='inWords'/>"
+                    +"<input class='btn btn-success btn-xs pull-right' type='button' id='inWordsButton' value='🔊Play' />"
+                    +"<span class='label label-warning pull-right' id='bTotalCoins'>"+json.totalCoins+"</span>"
+                    +"<span class='label label-info pull-right'> Total Coins in Network : </span>");
+            $("#inWordsButton").click(function () {
+                var text = $("#inWords").val();
+                responsiveVoice.speak(text);
+            });
+        },
+        error: function (e) {
+            console.log("ERROR: ", e);
+        }
+    });
+    
 });

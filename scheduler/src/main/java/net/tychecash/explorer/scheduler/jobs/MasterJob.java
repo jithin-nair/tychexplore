@@ -1,7 +1,10 @@
 package net.tychecash.explorer.scheduler.jobs;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import net.tychecash.explorer.common.model.LastBlockInfo;
+import net.tychecash.explorer.common.service.LastBlockInfoService;
 import net.tychecash.explorer.scheduler.model.BlockDetails;
 import net.tychecash.explorer.scheduler.service.JobService;
 import net.tychecash.explorer.service.model.response.BlockResponse;
@@ -28,6 +31,9 @@ public class MasterJob extends QuartzJobBean implements InterruptableJob {
     TycheExploreService tycheExploreService;
 
     @Autowired
+    LastBlockInfoService lastBlockInfoService;
+
+    @Autowired
     private SimpMessagingTemplate template;
 
     @Override
@@ -46,12 +52,24 @@ public class MasterJob extends QuartzJobBean implements InterruptableJob {
         String myValue = dataMap.getString("myKey");
         System.out.println("Value:" + myValue);
 
+        List<BlockDetails> blockDetailsList = new ArrayList<>();
+
         BlockResponse blockResponse = tycheExploreService.getLastBlockResponse();
         String height = blockResponse.getResult().getBlock_header().getHeight().toString();
         String hash = blockResponse.getResult().getBlock_header().getHash();
         String foundDate = blockResponse.getResult().getBlock_header().getTimestamp();
+        BlockDetails blockDetails = new BlockDetails(height, hash, foundDate);
 
-        template.convertAndSend("/topic/recentblock", new BlockDetails(height, hash, foundDate));
+        LastBlockInfo lastBlockInfo = lastBlockInfoService.findLastBlock();
+        height = lastBlockInfo.getBlockResponse().getResult().getBlock_header().getHeight().toString();
+        hash = lastBlockInfo.getBlockResponse().getResult().getBlock_header().getHash();
+        foundDate = lastBlockInfo.getBlockResponse().getResult().getBlock_header().getTimestamp();
+        BlockDetails lastBlockDetails = new BlockDetails(height, hash, foundDate);
+
+        blockDetailsList.add(blockDetails);
+        blockDetailsList.add(lastBlockDetails);
+
+        template.convertAndSend("/topic/recentblock", blockDetailsList);
 
         System.out.println("Thread: " + Thread.currentThread().getName() + " stopped.");
     }

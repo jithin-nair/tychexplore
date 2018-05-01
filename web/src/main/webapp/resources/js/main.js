@@ -77,7 +77,7 @@ $(document).ready(function () {
                     var timestamp = dataSource.records[itemIndex].timestamp;
                     var height = dataSource.records[itemIndex].height;
                     var difficulty = dataSource.records[itemIndex].difficulty;
-                    return "Height: " + height+"</br>Difficulty: " + difficulty+"</br>Found: " + new Date(timestamp * 1000).toLocaleDateString();
+                    return "Height: " + height + "</br>Difficulty: " + difficulty + "</br>Found: " + new Date(timestamp * 1000).toLocaleDateString();
                 }
             };
 

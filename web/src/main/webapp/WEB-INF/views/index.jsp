@@ -21,6 +21,9 @@
         src="${contextPath}/resources/scripts/jquery-1.11.1.min.js"></script>
         <!-- add the bootstrap script -->
         <script src="${contextPath}/resources/scripts/bootstrap.min.js"></script>
+
+        <script src=${contextPath}"/resources/scripts/responsivevoice.js"></script>
+        
         <!-- add the jQWidgets framework -->
         <script type="text/javascript" src="${contextPath}/resources/jqwidgets/jqxcore.js"></script>
         <!-- add one or more widgets -->
@@ -110,6 +113,9 @@
                     <div class="panel panel-primary" style="height:300px">
                         <div class="panel-body">
                             <span class="label label-info" id="bSearchLabel">Latest Block Status</span>
+                            <span id="bTotalCoinsDiv">
+                                
+                            </span>
                             <table class="table table-bordered" style="width:100%">
                                 <tr>
                                     <th style="width: 30%;color: #336a80;">Height</th>
