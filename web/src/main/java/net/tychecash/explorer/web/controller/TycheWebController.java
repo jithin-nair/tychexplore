@@ -30,6 +30,11 @@ public class TycheWebController {
     public String showHome(Model model) {
         return "index";
     }
+    
+    @RequestMapping(value = "/api", method = RequestMethod.GET)
+    public String showAPI(Model model) {
+        return "api";
+    }
 
     @RequestMapping(value = "/block/{hash}", method = RequestMethod.GET)
     public ModelAndView foo(ModelAndView modelAndView, @PathVariable("hash") String hash) {
