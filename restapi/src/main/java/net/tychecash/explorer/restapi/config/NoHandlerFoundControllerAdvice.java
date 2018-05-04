@@ -15,8 +15,14 @@ import org.springframework.web.servlet.NoHandlerFoundException;
  */
 @ControllerAdvice
 public class NoHandlerFoundControllerAdvice {
+    
     @ExceptionHandler(NoHandlerFoundException.class)
     public String handle404(Exception ex) {
         return "404";//this is view name
+    }
+    
+    @ExceptionHandler(RuntimeException.class)
+    public String handle500(Exception ex) {
+        return "500";//this is view name
     }
 }
