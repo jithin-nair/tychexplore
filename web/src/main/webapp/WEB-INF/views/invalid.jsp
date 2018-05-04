@@ -42,12 +42,13 @@
             <nav class="navbar navbar-fixed-top bg-primary" >
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="/${contextPath}"> <img
+                        <a class="navbar-brand" href="${contextPath}"> <img
                                 src="${contextPath}/resources/images/logo.png" alt="TychExplore Logo">
                         </a>
                     </div>
                     <ul class="nav navbar-nav">
-                        <li><a href="/${contextPath}" class="custom-link-color"><i class="fa fa-home"></i> Home </a></li>
+                        <li><a href="${contextPath}" class="custom-link-color"><i class="fa fa-home"></i> Home </a></li>
+                        <li><a href="${contextPath}/api" class="custom-link-color" target="_blank"><i class="fa fa-code"></i> API </a></li>
                         <li><a href="http://tychecash.net/#network" class="custom-link-color" target="_blank">
                                     <i class="fa fa-cloud"></i> Pools </a></li>
                     </ul>
