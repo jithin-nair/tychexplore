@@ -75,13 +75,13 @@
                             <span class="icon-bar bg-success"></span>
                             <span class="icon-bar bg-success"></span>
                         </button>
-                        <a class="navbar-brand" href="${contextPath}"> <img
+                        <a class="navbar-brand" href="http://explorer.tychecash.net/"> <img
                                 src="resources/images/logo.png" alt="TychExplore Logo">
                         </a>
                     </div>
                     <div class="collapse navbar-collapse" id="divCollapse">
                         <ul class="nav navbar-nav">
-                            <li><a href="${contextPath}" class="custom-link-color"><i class="fa fa-home"></i> Home </a></li>
+                            <li><a href="http://explorer.tychecash.net/" class="custom-link-color"><i class="fa fa-home"></i> Home </a></li>
                             <li><a href="${contextPath}/api" class="custom-link-color" target="_blank"><i class="fa fa-code"></i> API </a></li>
                             <li><a href="http://tychecash.net/#network" class="custom-link-color" target="_blank">
                                     <i class="fa fa-cloud"></i> Pools </a></li>
