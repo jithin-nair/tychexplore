@@ -5,6 +5,7 @@
  */
 package net.tychecash.explorer.service.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,19 +13,25 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import net.tychecash.explorer.service.config.TycheExploreConfig;
 import net.tychecash.explorer.service.model.CountVO;
 import net.tychecash.explorer.service.model.ResponseVO;
 import net.tychecash.explorer.service.model.request.BlockRequest;
 import net.tychecash.explorer.service.model.request.Params;
-import net.tychecash.explorer.service.model.response.BlockHeader;
-import net.tychecash.explorer.service.model.response.BlockResponse;
+import net.tychecash.explorer.service.model.response.block.BlockHeader;
+import net.tychecash.explorer.service.model.response.block.BlockResponse;
+import net.tychecash.explorer.service.model.response.block.tx.BlockTransactionResponse;
+import net.tychecash.explorer.service.model.response.tx.TransactionResponse;
 
 import net.tychecash.explorer.service.service.TycheExploreService;
 import net.tychecash.explorer.service.util.BlockUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Service;
 
 /**
@@ -67,6 +74,50 @@ public class TycheExploreServiceImpl implements TycheExploreService {
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         String uri = tycheExploreConfig.getJsonRpcServerUrl();
         BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
+        return blockResponse;
+
+    }
+
+    @Override
+    public BlockTransactionResponse getBlockTransactionResponseByHash(String hash) throws RuntimeException {
+        BlockRequest blockRequest = new BlockRequest();
+        blockRequest.setId("self");
+        blockRequest.setJsonrpc("2.0");
+        blockRequest.setMethod("f_block_json");
+        Params params = new Params();
+        params.setHash(hash);
+        blockRequest.setParams(params);
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+        String uri = tycheExploreConfig.getJsonRpcServerUrl();
+        BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonResponse = blockResponse.getResult().getJson_response();
+        BlockTransactionResponse blockTransactionResponse = null;
+        try {
+            blockTransactionResponse = mapper.readValue(jsonResponse, BlockTransactionResponse.class);
+        } catch (IOException ex) {
+            Logger.getLogger(TycheExploreServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException();
+        }
+        return blockTransactionResponse;
+
+    }
+
+    @Override
+    public TransactionResponse getTransactionResponseByHash(String tx_hash) throws RuntimeException {
+        BlockRequest blockRequest = new BlockRequest();
+        blockRequest.setId("self");
+        blockRequest.setJsonrpc("2.0");
+        blockRequest.setMethod("f_transaction_json");
+        Params params = new Params();
+        params.setHash(tx_hash);
+        blockRequest.setParams(params);
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+        String uri = tycheExploreConfig.getJsonRpcServerUrl();
+        TransactionResponse blockResponse = restTemplate.postForObject(uri, blockRequest, TransactionResponse.class);
         return blockResponse;
 
     }

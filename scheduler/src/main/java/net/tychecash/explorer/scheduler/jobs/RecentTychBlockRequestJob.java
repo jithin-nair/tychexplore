@@ -21,7 +21,7 @@ import net.tychecash.explorer.common.service.BlockService;
 
 import net.tychecash.explorer.scheduler.service.JobService;
 import net.tychecash.explorer.common.service.LastBlockInfoService;
-import net.tychecash.explorer.service.model.response.BlockResponse;
+import net.tychecash.explorer.service.model.response.block.BlockResponse;
 import net.tychecash.explorer.service.service.TycheExploreService;
 import org.quartz.InterruptableJob;
 import org.quartz.JobExecutionContext;

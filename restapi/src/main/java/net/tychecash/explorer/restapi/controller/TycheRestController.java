@@ -13,7 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.tychecash.explorer.restapi.service.RestApiService;
 import net.tychecash.explorer.service.model.ResponseVO;
-import net.tychecash.explorer.service.model.response.BlockResponse;
+import net.tychecash.explorer.service.model.response.block.BlockResponse;
 import net.tychecash.explorer.service.service.TycheExploreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

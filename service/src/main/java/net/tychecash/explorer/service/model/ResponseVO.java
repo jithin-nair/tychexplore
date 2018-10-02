@@ -1,7 +1,7 @@
 package net.tychecash.explorer.service.model;
 
 import java.util.List;
-import net.tychecash.explorer.service.model.response.BlockHeader;
+import net.tychecash.explorer.service.model.response.block.BlockHeader;
 
 public class ResponseVO {
 

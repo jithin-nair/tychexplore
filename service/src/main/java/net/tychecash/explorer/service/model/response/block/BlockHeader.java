@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.tychecash.explorer.service.model.response;
+package net.tychecash.explorer.service.model.response.block;
 
 import net.tychecash.explorer.service.util.BlockUtil;
 
