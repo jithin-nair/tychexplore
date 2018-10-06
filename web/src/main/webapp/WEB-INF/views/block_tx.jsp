@@ -21,9 +21,9 @@
         src="${contextPath}/resources/scripts/jquery-1.11.1.min.js"></script>
         <!-- add the bootstrap script -->
         <script src="${contextPath}/resources/scripts/bootstrap.min.js"></script>
-        
+
         <script src=${contextPath}"/resources/scripts/responsivevoice.js"></script>
-        
+
         <!-- add the jQWidgets framework -->
         <script type="text/javascript" src="${contextPath}/resources/jqwidgets/jqxcore.js"></script>
         <!-- add one or more widgets -->
@@ -40,8 +40,6 @@
         <script type="text/javascript" src="${contextPath}/resources/jqwidgets/jqxinput.js"></script>
         <script type="text/javascript" src="${contextPath}/resources/jqwidgets/jqxchart.core.js"></script>
         <script type="text/javascript" src="${contextPath}/resources/jqwidgets/jqxdraw.js"></script>
-
-        <script src="${contextPath}/resources/js/common.js"></script>
 
 
         <!-- VENDOR CSS -->
@@ -116,7 +114,7 @@
                         <div class="panel-body">
                             <span class="label label-info" id="bSearchLabel">Latest Block Status</span>
                             <span id="bTotalCoinsDiv">
-                                
+
                             </span>
                             <table class="table table-bordered" style="width:100%">
                                 <tr>
@@ -164,7 +162,112 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div id="table"></div>
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
+                            <span class="label label-info" id="bSearchLabel">Block Transaction Details</span>
+                            <span id="bTotalCoinsDiv">
+
+                            </span>
+                            <table class="table table-bordered" style="width:100%">
+                                <tr>
+                                    <th style="width: 10%;color: #336a80;">Major Version</th>
+                                    <td style="color: #2d5768;"><b><span id="majorVersion">${blockTransactionResponse.majorVersion}</span></b></td>
+                                </tr>
+                                <tr>
+                                    <th style="width: 10%;color: #336a80;">Minor Version</th>
+                                    <td style="color: #2d5768;">
+                                        <b><span id="prevId">${blockTransactionResponse.minorVersion}</span></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="width: 10%;color: #336a80;">Nonce</th>
+                                    <td style="color: #2d5768;"><b><span id="nonce">${blockTransactionResponse.nonce}</span></b></td>
+                                </tr>
+                                <tr>
+                                    <th style="width: 10%;color: #336a80;word-break: break-all;">Prev Block Id</th>
+                                    <td style="color: #2d5768;">
+                                        <i>
+                                            <a id="bPrevious" class="label label-info" href="${contextPath}/block/tx/${blockTransactionResponse.prevId}">${blockTransactionResponse.prevId}</a> 
+                                        </i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="width: 10%;color: #336a80;">Block Found</th>
+                                    <td style="color: #2d5768;"><b><span id="btxFound">${blockTransactionResponse.timestamp}</span></b></td>
+                                </tr>
+                                <tr>
+                                    <th style="width: 10%;color: #336a80;">Tx hashes</th>
+                                    <td style="color: #2d5768;">
+                                        <b>
+                                            <table class="table table-bordered" style="width:100%">
+                                                <c:forEach var="hashes" items="${blockTransactionResponse.txHashes}" varStatus="loop">
+                                                    <tr>
+                                                        <th style="width: 15%;color: #336a80;">Transaction ${loop.index+1}</th>
+                                                        <td style="color: #2d5768;"><b>
+                                                                <span id="majorVersion"><c:out value="${hashes}" />
+                                                                </span></b>
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </table>
+                                        </b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="width: 10%;color: #336a80;">Miner Tx</th>
+                                    <td style="color: #2d5768;word-break: break-all;">
+                                        <b>
+                                            <table class="table table-bordered" style="width:100%">
+                                                <tr>
+                                                    <th style="width: 15%;color: #336a80;">Extra</th>
+                                                    <td style="color: #2d5768;">
+                                                        <b><span id="extra">${blockTransactionResponse.minerTx.extra}</span></b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width: 15%;color: #336a80;">Block Unlock Time</th>
+                                                    <td style="color: #2d5768;">
+                                                        <b><span id="unlockTime">${blockTransactionResponse.minerTx.unlockTime}</span></b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width: 15%;color: #336a80;">Version</th>
+                                                    <td style="color: #2d5768;">
+                                                        <b><span id="version">${blockTransactionResponse.minerTx.version}</span></b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width: 15%;color: #336a80;">Vin</th>
+                                                    <td style="color: #2d5768;">
+                                                        <b>
+                                                            <table class="table table-bordered" style="width:100%">
+                                                                <c:forEach var="vin" items="${blockTransactionResponse.minerTx.vin}" varStatus="loop">
+                                                                    <tr>
+                                                                        <th style="width: 15%;color: #336a80;">Type</th>
+                                                                        <td style="color: #2d5768;"><b>
+                                                                                <span id="vType"><c:out value="${vin.type}" />
+                                                                                </span></b>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th style="width: 15%;color: #336a80;">Height</th>
+                                                                        <td style="color: #2d5768;"><b>
+                                                                                <span id="vHeight"><c:out value="${vin.value.height}" />
+                                                                                </span></b>
+                                                                        </td>
+                                                                    </tr>
+                                                                </c:forEach>
+                                                            </table>
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </b>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -315,6 +418,7 @@
 
         //Converts timestamp from server side to GMT String equivalent
         $("#bFound").text(new Date($("#bFound").text() * 1000).toGMTString());
+        $("#btxFound").text(new Date($("#btxFound").text() * 1000).toGMTString());
 
     </script>
 </html>

@@ -9,6 +9,7 @@ import net.tychecash.explorer.service.service.impl.TycheExploreServiceImpl;
 import net.tychecash.explorer.service.model.CountVO;
 import net.tychecash.explorer.service.model.ResponseVO;
 import net.tychecash.explorer.service.model.response.block.BlockResponse;
+import net.tychecash.explorer.service.model.response.block.tx.BlockTransactionResponse;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -81,7 +82,7 @@ public class TycheExploreServiceImplTest {
         String hash = "2362f29ac0b1581cf1370950049345658af6e80a5bad56f410722a802540badf";
         TycheExploreServiceImpl instance = new TycheExploreServiceImpl();
         BlockResponse expResult = null;
-        BlockResponse result = instance.getBlockTransactionResponseByHash(hash);
+        BlockTransactionResponse result = instance.getBlockTransactionResponseByHash(hash);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
