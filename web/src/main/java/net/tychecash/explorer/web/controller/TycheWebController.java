@@ -70,6 +70,7 @@ public class TycheWebController {
             modelAndView.addObject("bStatus", (blockResponse.getResult().getBlock_header().getOrphan_status().equalsIgnoreCase("true")) ? "Orphaned" : "Not Orphaned");
             modelAndView.addObject("bPrevious", blockResponse.getResult().getBlock_header().getPrev_hash());
             modelAndView.addObject("blockTransactionResponse", blockTransactionResponse);
+            modelAndView.addObject("transactionVOs", tycheExploreService.getTransactionsByBlockTransactionResponse(blockTransactionResponse));
             modelAndView.setViewName("block_tx");
         } catch (RuntimeException ex) {
             modelAndView.addObject("message", "Nothing in the blockchain has been found that matches the search"

@@ -57,6 +57,10 @@
             .custom-link-color{
                 color:whitesmoke;
             }
+            th {
+                background-color: #616161;
+                color: white;
+            }
         </style>
     </head>
     <body>
@@ -118,34 +122,34 @@
                             </span>
                             <table class="table table-bordered" style="width:100%">
                                 <tr>
-                                    <th style="width: 30%;color: #336a80;">Height</th>
+                                    <th style="width: 30%;">Height</th>
                                     <td style="color: #2d5768;"><b><span id="bHeight">${bHeight}</span></b></td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 30%;color: #336a80;">Hash</th>
+                                    <th style="width: 30%;">Hash</th>
                                     <td style="color: #2d5768;word-break: break-all;">
                                         <span id="bHash" class="label label-success">${bHash}</span>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 30%;color: #336a80;">Found</th>
+                                    <th style="width: 30%;">Found</th>
                                     <td style="color: #2d5768;"><b><span id="bFound">${bFound}</span></b></td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 30%;color: #336a80;">Difficulty</th>
+                                    <th style="width: 30%;">Difficulty</th>
                                     <td style="color: #2d5768;"><b><span id="bDifficulty">${bDifficulty}</span></b></td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 30%;color: #336a80;">Reward</th>
+                                    <th style="width: 30%;">Reward</th>
                                     <td style="color: #2d5768;"><b><span id="bReward">${bReward}</span></b>
                                         &nbsp;<small class="label label-warning">TYCH</small></td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 30%;color: #336a80;">Status</th>
+                                    <th style="width: 30%;">Status</th>
                                     <td style="color: #2d5768;"><b><span id="bStatus">${bStatus}</span></b></td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 30%;color: #336a80;">Previous</th>
+                                    <th style="width: 30%;">Previous</th>
                                     <td style="color: #2d5768;word-break: break-all;">
                                         <i>
                                             <a id="bPrevious" class="label label-info" href="${contextPath}/block/${bPrevious}">${bPrevious}</a> 
@@ -170,21 +174,21 @@
                             </span>
                             <table class="table table-bordered" style="width:100%">
                                 <tr>
-                                    <th style="width: 10%;color: #336a80;">Major Version</th>
+                                    <th style="width: 10%;">Major Version</th>
                                     <td style="color: #2d5768;"><b><span id="majorVersion">${blockTransactionResponse.majorVersion}</span></b></td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 10%;color: #336a80;">Minor Version</th>
+                                    <th style="width: 10%;">Minor Version</th>
                                     <td style="color: #2d5768;">
                                         <b><span id="prevId">${blockTransactionResponse.minorVersion}</span></b>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 10%;color: #336a80;">Nonce</th>
+                                    <th style="width: 10%;">Nonce</th>
                                     <td style="color: #2d5768;"><b><span id="nonce">${blockTransactionResponse.nonce}</span></b></td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 10%;color: #336a80;word-break: break-all;">Prev Block Id</th>
+                                    <th style="width: 10%;word-break: break-all;">Prev Block Id</th>
                                     <td style="color: #2d5768;">
                                         <i>
                                             <a id="bPrevious" class="label label-info" href="${contextPath}/block/tx/${blockTransactionResponse.prevId}">${blockTransactionResponse.prevId}</a> 
@@ -192,17 +196,17 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 10%;color: #336a80;">Block Found</th>
+                                    <th style="width: 10%;">Block Found</th>
                                     <td style="color: #2d5768;"><b><span id="btxFound">${blockTransactionResponse.timestamp}</span></b></td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 10%;color: #336a80;">Tx hashes</th>
+                                    <th style="width: 10%;">Tx hashes</th>
                                     <td style="color: #2d5768;">
                                         <b>
                                             <table class="table table-bordered" style="width:100%">
                                                 <c:forEach var="hashes" items="${blockTransactionResponse.txHashes}" varStatus="loop">
                                                     <tr>
-                                                        <th style="width: 15%;color: #336a80;">Transaction ${loop.index+1}</th>
+                                                        <th style="width: 15%;">Transaction ${loop.index+1}</th>
                                                         <td style="color: #2d5768;"><b>
                                                                 <span id="majorVersion"><c:out value="${hashes}" />
                                                                 </span></b>
@@ -214,45 +218,75 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 10%;color: #336a80;">Miner Tx</th>
+                                    <th style="width: 10%;">Miner Tx</th>
                                     <td style="color: #2d5768;word-break: break-all;">
                                         <b>
                                             <table class="table table-bordered" style="width:100%">
                                                 <tr>
-                                                    <th style="width: 15%;color: #336a80;">Extra</th>
+                                                    <th style="width: 15%;">Extra</th>
                                                     <td style="color: #2d5768;">
                                                         <b><span id="extra">${blockTransactionResponse.minerTx.extra}</span></b>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th style="width: 15%;color: #336a80;">Block Unlock Time</th>
+                                                    <th style="width: 15%;">Block Unlock Time</th>
                                                     <td style="color: #2d5768;">
                                                         <b><span id="unlockTime">${blockTransactionResponse.minerTx.unlockTime}</span></b>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th style="width: 15%;color: #336a80;">Version</th>
+                                                    <th style="width: 15%;">Version</th>
                                                     <td style="color: #2d5768;">
                                                         <b><span id="version">${blockTransactionResponse.minerTx.version}</span></b>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th style="width: 15%;color: #336a80;">Vin</th>
+                                                    <th style="width: 15%;">Vin</th>
                                                     <td style="color: #2d5768;">
                                                         <b>
                                                             <table class="table table-bordered" style="width:100%">
                                                                 <c:forEach var="vin" items="${blockTransactionResponse.minerTx.vin}" varStatus="loop">
                                                                     <tr>
-                                                                        <th style="width: 15%;color: #336a80;">Type</th>
+                                                                        <th style="width: 15%;">Type</th>
                                                                         <td style="color: #2d5768;"><b>
                                                                                 <span id="vType"><c:out value="${vin.type}" />
                                                                                 </span></b>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <th style="width: 15%;color: #336a80;">Height</th>
+                                                                        <th style="width: 15%;">Height</th>
                                                                         <td style="color: #2d5768;"><b>
                                                                                 <span id="vHeight"><c:out value="${vin.value.height}" />
+                                                                                </span></b>
+                                                                        </td>
+                                                                    </tr>
+                                                                </c:forEach>
+                                                            </table>
+                                                        </b>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width: 15%;">VOut</th>
+                                                    <td style="color: #2d5768;">
+                                                        <b>
+                                                            <table class="table table-bordered" style="width:100%">
+                                                                <tr>
+                                                                    <th style="width: 10%;">Type</th>
+                                                                    <th style="width: 70%;">Key</th>
+                                                                    <th style="width: 20%;">Amount</th>
+                                                                </tr>
+                                                                <c:forEach var="transactionVO" items="${transactionVOs}" varStatus="loop">
+                                                                    <tr>
+                                                                        <td style="color: #2d5768;"><b>
+                                                                                <span id="txType"><c:out value="${transactionVO.type}" />
+                                                                                </span></b>
+                                                                        </td>
+                                                                        <td style="color: #2d5768;"><b>
+                                                                                <span id="txKey"><c:out value="${transactionVO.key}" />
+                                                                                </span></b>
+                                                                        </td>
+                                                                        <td style="color: #2d5768;"><b>
+                                                                                <span id="txAmount"><c:out value="${transactionVO.amountValue}" />
                                                                                 </span></b>
                                                                         </td>
                                                                     </tr>

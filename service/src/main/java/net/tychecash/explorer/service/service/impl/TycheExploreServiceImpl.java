@@ -14,17 +14,20 @@ import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.tychecash.explorer.service.config.TycheExploreConfig;
 import net.tychecash.explorer.service.model.CountVO;
 import net.tychecash.explorer.service.model.ResponseVO;
+import net.tychecash.explorer.service.model.TransactionVO;
 import net.tychecash.explorer.service.model.request.BlockRequest;
 import net.tychecash.explorer.service.model.request.Params;
 import net.tychecash.explorer.service.model.response.block.BlockHeader;
 import net.tychecash.explorer.service.model.response.block.BlockResponse;
 import net.tychecash.explorer.service.model.response.block.tx.BlockTransactionResponse;
+import net.tychecash.explorer.service.model.response.block.tx.Vout;
 import net.tychecash.explorer.service.model.response.tx.TransactionResponse;
 
 import net.tychecash.explorer.service.service.TycheExploreService;
@@ -219,6 +222,21 @@ public class TycheExploreServiceImpl implements TycheExploreService {
         Gson gson = new Gson();
         CountVO countVO = gson.fromJson(result, CountVO.class);
         return countVO;
+    }
+    
+    @Override
+    public List<TransactionVO> getTransactionsByBlockTransactionResponse(BlockTransactionResponse blockTransactionResponse){
+        List<TransactionVO> transactionVOs = new ArrayList<>();
+        List<Vout> vouts = blockTransactionResponse.getMinerTx().getVout();
+        for (Vout vout : vouts){
+            TransactionVO transactionVO = new TransactionVO();
+            transactionVO.setAmountValue(vout.getAmount().toString(10));
+            transactionVO.setAmountOut(new BigDecimal(vout.getAmount()));
+            transactionVO.setKey(vout.getTarget().getData().getKey());
+            transactionVO.setType(vout.getTarget().getType());
+            transactionVOs.add(transactionVO);
+        }
+        return transactionVOs;
     }
 
 }
