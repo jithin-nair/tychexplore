@@ -5,6 +5,8 @@
  */
 package net.tychecash.explorer.service.model.response.block;
 
+import java.util.List;
+
 /**
  *
  * @author jithin
@@ -17,6 +19,13 @@ public class Result {
     
     @com.fasterxml.jackson.annotation.JsonRawValue
     private String json_response;
+    
+    @com.fasterxml.jackson.annotation.JsonRawValue
+    private String tx_as_json;
+    
+    private List<String> missed_tx;
+    
+    private List<String> txs_as_hex;
 
     public String getStatus() {
         return status;
@@ -40,6 +49,30 @@ public class Result {
 
     public void setJson_response(String json_response) {
         this.json_response = json_response;
+    }
+
+    public String getTx_as_json() {
+        return tx_as_json;
+    }
+
+    public void setTx_as_json(String tx_as_json) {
+        this.tx_as_json = tx_as_json;
+    }
+
+    public List<String> getMissed_tx() {
+        return missed_tx;
+    }
+
+    public void setMissed_tx(List<String> missed_tx) {
+        this.missed_tx = missed_tx;
+    }
+
+    public List<String> getTxs_as_hex() {
+        return txs_as_hex;
+    }
+
+    public void setTxs_as_hex(List<String> txs_as_hex) {
+        this.txs_as_hex = txs_as_hex;
     }
 
     @Override

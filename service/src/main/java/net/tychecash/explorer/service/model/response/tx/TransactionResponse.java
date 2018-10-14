@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 })
 public class TransactionResponse {
 
-    @JsonProperty("data")
+    @JsonProperty("hex")
     private String data;
     @JsonProperty("extra")
     private String extra;

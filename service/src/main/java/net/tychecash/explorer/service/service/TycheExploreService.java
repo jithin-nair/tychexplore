@@ -8,7 +8,8 @@ package net.tychecash.explorer.service.service;
 import java.util.List;
 import net.tychecash.explorer.service.model.CountVO;
 import net.tychecash.explorer.service.model.ResponseVO;
-import net.tychecash.explorer.service.model.TransactionVO;
+import net.tychecash.explorer.service.model.TransactionInVO;
+import net.tychecash.explorer.service.model.TransactionOutVO;
 import net.tychecash.explorer.service.model.response.block.BlockResponse;
 import net.tychecash.explorer.service.model.response.block.tx.BlockTransactionResponse;
 import net.tychecash.explorer.service.model.response.tx.TransactionResponse;
@@ -37,5 +38,9 @@ public interface TycheExploreService {
 
     public CountVO getBlockCount();
     
-    public List<TransactionVO> getTransactionsByBlockTransactionResponse(BlockTransactionResponse blockTransactionResponse);
+    public List<TransactionOutVO> getTransactionsByBlockTransactionResponse(BlockTransactionResponse blockTransactionResponse);
+    
+    public List<TransactionOutVO> getTransactionsVoutByTransactionResponse(TransactionResponse transactionResponse);
+    
+    public List<TransactionInVO> getTransactionsVinByTransactionResponse(TransactionResponse transactionResponse);
 }

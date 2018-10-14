@@ -17,18 +17,21 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 import net.tychecash.explorer.service.config.TycheExploreConfig;
 import net.tychecash.explorer.service.model.CountVO;
 import net.tychecash.explorer.service.model.ResponseVO;
-import net.tychecash.explorer.service.model.TransactionVO;
+import net.tychecash.explorer.service.model.TransactionInVO;
+import net.tychecash.explorer.service.model.TransactionOutVO;
 import net.tychecash.explorer.service.model.request.BlockRequest;
 import net.tychecash.explorer.service.model.request.Params;
 import net.tychecash.explorer.service.model.response.block.BlockHeader;
 import net.tychecash.explorer.service.model.response.block.BlockResponse;
 import net.tychecash.explorer.service.model.response.block.tx.BlockTransactionResponse;
-import net.tychecash.explorer.service.model.response.block.tx.Vout;
+import net.tychecash.explorer.service.model.response.tx.Vout;
 import net.tychecash.explorer.service.model.response.tx.TransactionResponse;
+import net.tychecash.explorer.service.model.response.tx.Vin;
 
 import net.tychecash.explorer.service.service.TycheExploreService;
 import net.tychecash.explorer.service.util.BlockUtil;
@@ -114,14 +117,26 @@ public class TycheExploreServiceImpl implements TycheExploreService {
         blockRequest.setId("self");
         blockRequest.setJsonrpc("2.0");
         blockRequest.setMethod("f_transaction_json");
+        List<String> txHashes = new ArrayList<>();
+        txHashes.add(tx_hash);
         Params params = new Params();
-        params.setHash(tx_hash);
+        params.setTxHashes(txHashes);
         blockRequest.setParams(params);
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
         String uri = tycheExploreConfig.getJsonRpcServerUrl();
-        TransactionResponse blockResponse = restTemplate.postForObject(uri, blockRequest, TransactionResponse.class);
-        return blockResponse;
+        BlockResponse blockResponse = restTemplate.postForObject(uri, blockRequest, BlockResponse.class);
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonResponse = blockResponse.getResult().getTx_as_json();
+        jsonResponse = jsonResponse.replaceFirst(Pattern.quote("\"\""), "\"hex\"");
+        TransactionResponse transactionResponse = null;
+        try {
+            transactionResponse = mapper.readValue(jsonResponse, TransactionResponse.class);
+        } catch (IOException ex) {
+            Logger.getLogger(TycheExploreServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException();
+        }
+        return transactionResponse;
 
     }
 
@@ -225,16 +240,51 @@ public class TycheExploreServiceImpl implements TycheExploreService {
     }
     
     @Override
-    public List<TransactionVO> getTransactionsByBlockTransactionResponse(BlockTransactionResponse blockTransactionResponse){
-        List<TransactionVO> transactionVOs = new ArrayList<>();
+    public List<TransactionOutVO> getTransactionsByBlockTransactionResponse(BlockTransactionResponse blockTransactionResponse){
+        List<TransactionOutVO> transactionVOs = new ArrayList<>();
         List<Vout> vouts = blockTransactionResponse.getMinerTx().getVout();
         for (Vout vout : vouts){
-            TransactionVO transactionVO = new TransactionVO();
+            TransactionOutVO transactionVO = new TransactionOutVO();
             transactionVO.setAmountValue(vout.getAmount().toString(10));
             transactionVO.setAmountOut(new BigDecimal(vout.getAmount()));
             transactionVO.setKey(vout.getTarget().getData().getKey());
             transactionVO.setType(vout.getTarget().getType());
             transactionVOs.add(transactionVO);
+        }
+        return transactionVOs;
+    }
+    
+    @Override
+    public List<TransactionOutVO> getTransactionsVoutByTransactionResponse(TransactionResponse transactionResponse){
+        List<TransactionOutVO> transactionVOs = new ArrayList<>();
+        List<Vout> vouts = transactionResponse.getVout();
+        for (Vout vout : vouts){
+            TransactionOutVO transactionVO = new TransactionOutVO();
+            transactionVO.setAmountValue(vout.getAmount().toString(10));
+            transactionVO.setAmountOut(new BigDecimal(vout.getAmount()));
+            transactionVO.setKey(vout.getTarget().getData().getKey());
+            transactionVO.setType(vout.getTarget().getType());
+            transactionVOs.add(transactionVO);
+        }
+        return transactionVOs;
+    }
+
+    @Override
+    public List<TransactionInVO> getTransactionsVinByTransactionResponse(TransactionResponse transactionResponse) {
+        List<TransactionInVO> transactionVOs = new ArrayList<>();
+        List<Vin> vins = transactionResponse.getVin();
+        for (Vin vin : vins){
+            TransactionInVO transactionInVO = new TransactionInVO();
+            transactionInVO.setAmountIn(new BigDecimal(vin.getValue().getAmount()));
+            transactionInVO.setAmountValue(vin.getValue().getAmount().toString());
+            transactionInVO.setType(vin.getType());
+            transactionInVO.setKeyImage(vin.getValue().getKImage());
+            String offsetVal = "";
+            for(Integer offsets : vin.getValue().getKeyOffsets()){
+                offsetVal = offsetVal +","+offsets.toString();
+            }
+            transactionInVO.setKeyOffsets(offsetVal.replaceFirst(Pattern.quote(","), ""));
+            transactionVOs.add(transactionInVO);
         }
         return transactionVOs;
     }

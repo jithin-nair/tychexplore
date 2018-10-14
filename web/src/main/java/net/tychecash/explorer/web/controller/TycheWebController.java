@@ -2,6 +2,7 @@ package net.tychecash.explorer.web.controller;
 
 import net.tychecash.explorer.service.model.response.block.BlockResponse;
 import net.tychecash.explorer.service.model.response.block.tx.BlockTransactionResponse;
+import net.tychecash.explorer.service.model.response.tx.TransactionResponse;
 import net.tychecash.explorer.service.service.TycheExploreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -72,6 +73,22 @@ public class TycheWebController {
             modelAndView.addObject("blockTransactionResponse", blockTransactionResponse);
             modelAndView.addObject("transactionVOs", tycheExploreService.getTransactionsByBlockTransactionResponse(blockTransactionResponse));
             modelAndView.setViewName("block_tx");
+        } catch (RuntimeException ex) {
+            modelAndView.addObject("message", "Nothing in the blockchain has been found that matches the search"
+                    + "<br>Note: There might be some delay for latest details to be found");
+            modelAndView.setViewName("invalid");
+        }
+        return modelAndView;
+    }
+    
+    @RequestMapping(value = "/tx/{hash}", method = RequestMethod.GET)
+    public ModelAndView getTransaction(ModelAndView modelAndView, @PathVariable("hash") String hash) {
+        try {
+            TransactionResponse transactionResponse = tycheExploreService.getTransactionResponseByHash(hash);
+            modelAndView.addObject("transactionResponse", transactionResponse);
+            modelAndView.addObject("transactionInVOs", tycheExploreService.getTransactionsVinByTransactionResponse(transactionResponse));
+            modelAndView.addObject("transactionOutVOs", tycheExploreService.getTransactionsVoutByTransactionResponse(transactionResponse));
+            modelAndView.setViewName("tx");
         } catch (RuntimeException ex) {
             modelAndView.addObject("message", "Nothing in the blockchain has been found that matches the search"
                     + "<br>Note: There might be some delay for latest details to be found");

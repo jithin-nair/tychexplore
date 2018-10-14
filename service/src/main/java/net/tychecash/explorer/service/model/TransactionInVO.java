@@ -12,15 +12,17 @@ import net.tychecash.explorer.service.util.BlockUtil;
  *
  * @author jithin
  */
-public class TransactionVO {
+public class TransactionInVO {
     
     private String amountValue;
     
-    private BigDecimal amountOut;
+    private BigDecimal amountIn;
     
-    private String key;
+    private String keyImage;
     
     private String type;
+    
+    private String keyOffsets;
 
     public String getAmountValue() {
         return amountValue;
@@ -30,20 +32,20 @@ public class TransactionVO {
         this.amountValue = BlockUtil.insertCharAt(amountValue, '.', 8);
     }
 
-    public BigDecimal getAmountOut() {
-        return amountOut;
+    public BigDecimal getAmountIn() {
+        return amountIn;
     }
 
-    public void setAmountOut(BigDecimal amountOut) {
-        this.amountOut = amountOut;
+    public void setAmountIn(BigDecimal amountIn) {
+        this.amountIn = amountIn;
     }
 
-    public String getKey() {
-        return key;
+    public String getKeyImage() {
+        return keyImage;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setKeyImage(String keyImage) {
+        this.keyImage = keyImage;
     }
 
     public String getType() {
@@ -53,6 +55,13 @@ public class TransactionVO {
     public void setType(String type) {
         this.type = type;
     }
-    
+
+    public String getKeyOffsets() {
+        return keyOffsets;
+    }
+
+    public void setKeyOffsets(String keyOffsets) {
+        this.keyOffsets = keyOffsets;
+    }
     
 }

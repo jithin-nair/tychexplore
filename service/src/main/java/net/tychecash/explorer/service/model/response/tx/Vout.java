@@ -4,6 +4,7 @@ package net.tychecash.explorer.service.model.response.tx;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import java.math.BigInteger;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -13,17 +14,17 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class Vout {
 
     @JsonProperty("amount")
-    private Integer amount;
+    private BigInteger amount;
     @JsonProperty("target")
     private Target target;
 
     @JsonProperty("amount")
-    public Integer getAmount() {
+    public BigInteger getAmount() {
         return amount;
     }
 
     @JsonProperty("amount")
-    public void setAmount(Integer amount) {
+    public void setAmount(BigInteger amount) {
         this.amount = amount;
     }
 

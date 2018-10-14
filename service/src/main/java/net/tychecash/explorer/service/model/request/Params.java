@@ -5,6 +5,9 @@
  */
 package net.tychecash.explorer.service.model.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
+
 /**
  *
  * @author jithin
@@ -14,6 +17,9 @@ public class Params {
     private Integer height;
 
     private String hash;
+    
+    @JsonProperty("txs_hashes")
+    private List<String> txHashes;
 
     public Integer getHeight() {
         return height;
@@ -29,6 +35,14 @@ public class Params {
 
     public void setHash(String hash) {
         this.hash = hash;
+    }
+
+    public List<String> getTxHashes() {
+        return txHashes;
+    }
+
+    public void setTxHashes(List<String> txHashes) {
+        this.txHashes = txHashes;
     }
 
     @Override

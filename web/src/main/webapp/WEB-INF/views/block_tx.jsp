@@ -206,9 +206,12 @@
                                             <table class="table table-bordered" style="width:100%">
                                                 <c:forEach var="hashes" items="${blockTransactionResponse.txHashes}" varStatus="loop">
                                                     <tr>
-                                                        <th style="width: 15%;">Transaction ${loop.index+1}</th>
+                                                        <th style="width: 12%;">Transaction ${loop.index+1}</th>
                                                         <td style="color: #2d5768;"><b>
-                                                                <span id="majorVersion"><c:out value="${hashes}" />
+                                                                <span id="txHash_${loop.index+1}">
+                                                                    <i>
+                                                                        <a id="bPrevious" class="label label-primary" href="${contextPath}/tx/<c:out value="${hashes}" />"><c:out value="${hashes}" /></a> 
+                                                                    </i>
                                                                 </span></b>
                                                         </td>
                                                     </tr>
@@ -223,38 +226,38 @@
                                         <b>
                                             <table class="table table-bordered" style="width:100%">
                                                 <tr>
-                                                    <th style="width: 15%;">Extra</th>
+                                                    <th style="width: 12%;">Extra</th>
                                                     <td style="color: #2d5768;">
                                                         <b><span id="extra">${blockTransactionResponse.minerTx.extra}</span></b>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th style="width: 15%;">Block Unlock Time</th>
+                                                    <th style="width: 12%;">Block Unlock Height</th>
                                                     <td style="color: #2d5768;">
                                                         <b><span id="unlockTime">${blockTransactionResponse.minerTx.unlockTime}</span></b>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th style="width: 15%;">Version</th>
+                                                    <th style="width: 12%;">Version</th>
                                                     <td style="color: #2d5768;">
                                                         <b><span id="version">${blockTransactionResponse.minerTx.version}</span></b>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th style="width: 15%;">Vin</th>
+                                                    <th style="width: 12%;">Vin</th>
                                                     <td style="color: #2d5768;">
                                                         <b>
                                                             <table class="table table-bordered" style="width:100%">
                                                                 <c:forEach var="vin" items="${blockTransactionResponse.minerTx.vin}" varStatus="loop">
                                                                     <tr>
-                                                                        <th style="width: 15%;">Type</th>
+                                                                        <th style="width: 12%;">Type</th>
                                                                         <td style="color: #2d5768;"><b>
                                                                                 <span id="vType"><c:out value="${vin.type}" />
                                                                                 </span></b>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <th style="width: 15%;">Height</th>
+                                                                        <th style="width: 12%;">Height</th>
                                                                         <td style="color: #2d5768;"><b>
                                                                                 <span id="vHeight"><c:out value="${vin.value.height}" />
                                                                                 </span></b>
@@ -266,7 +269,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <th style="width: 15%;">VOut</th>
+                                                    <th style="width: 12%;">VOut</th>
                                                     <td style="color: #2d5768;">
                                                         <b>
                                                             <table class="table table-bordered" style="width:100%">
