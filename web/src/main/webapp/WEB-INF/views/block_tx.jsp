@@ -61,6 +61,38 @@
                 background-color: #616161;
                 color: white;
             }
+            .jqx-chart-axis-text,
+            .jqx-chart-label-text, 
+            .jqx-chart-legend-text
+            {
+                fill: #fafafa;
+                color: #fafafa;
+                font-size: 12px;
+                font-family: Verdana;
+            }
+            .jqx-chart-axis-description
+            {
+                fill: #fafafa;
+                color: #fafafa;
+                font-size: 12px;
+                font-family: Verdana;
+            }
+            .jqx-chart-title-text
+            {
+                fill: #fafafa;
+                color: #fafafa;
+                font-size: 14px;
+                font-weight: bold;
+                font-family: Verdana;
+            }
+            .jqx-chart-title-description
+            {
+                fill: #fafafa;
+                color: #fafafa;
+                font-size: 13px;
+                font-weight: normal;
+                font-family: Verdana;
+            }
         </style>
     </head>
     <body>
@@ -128,7 +160,9 @@
                                 <tr>
                                     <th style="width: 30%;">Hash</th>
                                     <td style="color: #2d5768;word-break: break-all;">
-                                        <span id="bHash" class="label label-success">${bHash}</span>
+                                        <i>
+                                            <a id="bHash" class="label label-success" href="${contextPath}/block/tx/${bHash}">${bHash}</a> 
+                                        </i>
                                     </td>
                                 </tr>
                                 <tr>
@@ -152,7 +186,7 @@
                                     <th style="width: 30%;">Previous</th>
                                     <td style="color: #2d5768;word-break: break-all;">
                                         <i>
-                                            <a id="bPrevious" class="label label-info" href="${contextPath}/block/${bPrevious}">${bPrevious}</a> 
+                                            <a id="bPrevious" class="label label-info" href="${contextPath}/block/tx/${bPrevious}">${bPrevious}</a> 
                                         </i>
                                     </td>
                                 </tr>
@@ -389,6 +423,7 @@
                         title: "Difficulty Graph",
                         description: "Difficulty vs Height",
                         toolTipFormatFunction: toolTipCustomFormatFn(dataAdapter),
+                        backgroundColor: "#2e3338",
                         enableAnimations: true,
                         showLegend: true,
                         padding: {left: 15, top: 5, right: 20, bottom: 5},

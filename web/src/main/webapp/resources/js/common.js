@@ -21,9 +21,9 @@ $(document).ready(function () {
                 type: 'string',
                 map: 'reward'
             }, {
-                name: 'orphan_status',
+                name: 'timestamp',
                 type: 'string',
-                map: 'orphan_status'
+                map: 'timestamp'
             }],
         id: 'id',
         url: url,
@@ -44,12 +44,21 @@ $(document).ready(function () {
         }
     };
     
+    var linkrenderer = function (row, column, value) {
+                if (value.indexOf('#') != -1) {
+                    value = value.substring(0, value.indexOf('#'));
+                }
+                var format = { target: '"_self"' };
+                var href = "block/tx/" + value;
+            return "<a href='" + href + "'>" + value + "</a>";
+            }
+    
     var dataAdapter = new $.jqx.dataAdapter(source);
 
     $("#table").jqxDataTable({
         width: "100%",
         autoRowHeight: true,
-        theme: 'darkblue',
+        theme: 'metrodark',
         source: dataAdapter,
         filterable: false,
         pagerPosition: 'both',
@@ -68,7 +77,8 @@ $(document).ready(function () {
                 text: 'Block Hash',
                 editable: false,
                 dataField: 'hash',
-                width: '45%'
+                width: '45%',
+                cellsrenderer: linkrenderer
             }, {
                 text: 'Difficulty',
                 editable: false,
@@ -80,17 +90,12 @@ $(document).ready(function () {
                 width: '15%',
                 cellsalign: 'left'
             }, {
-                text: 'Orphan Status',
-                dataField: 'orphan_status',
+                text: 'Found Time',
+                dataField: 'timestamp',
                 cellsalign: 'center',
                 width: '10%',
                 cellsrenderer: function (row, column, value) {
-                    if(value===true){
-                        return "Orphaned";
-                    }
-                    else{
-                        return "Not Orphaned";
-                    }
+                    return new Date(value * 1000).toGMTString();
                 }
             }]
     });

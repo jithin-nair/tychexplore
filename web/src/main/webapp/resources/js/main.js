@@ -26,6 +26,7 @@ $(document).ready(function () {
                     var json = data;
                     $("#bHeight").text(json.result.block_header.height);
                     $("#bHash").text(json.result.block_header.hash);
+                    $("#bHash").attr("href", "block/tx/" + json.result.block_header.hash);
                     $("#bFound").text(new Date(json.result.block_header.timestamp * 1000).toGMTString());
                     $("#bDifficulty").text(json.result.block_header.difficulty);
                     $("#bReward").text(json.result.block_header.reward);
@@ -88,6 +89,7 @@ $(document).ready(function () {
                 title: "Difficulty Graph",
                 description: "Difficulty vs Height",
                 toolTipFormatFunction: toolTipCustomFormatFn(dataAdapter),
+                backgroundColor: "#2e3338",
                 enableAnimations: true,
                 showLegend: true,
                 padding: {left: 15, top: 5, right: 20, bottom: 5},
@@ -134,6 +136,7 @@ $(document).ready(function () {
                 } else {
                     $("#bHeight").text(json.result.block_header.height);
                     $("#bHash").text(json.result.block_header.hash);
+                    $("#bHash").attr("href", "block/tx/" + json.result.block_header.hash);
                     $("#bFound").text(new Date(json.result.block_header.timestamp * 1000).toGMTString());
                     $("#bDifficulty").text(json.result.block_header.difficulty);
                     $("#bReward").text(json.result.block_header.reward);

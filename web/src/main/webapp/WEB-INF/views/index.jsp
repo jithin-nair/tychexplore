@@ -23,7 +23,7 @@
         <script src="${contextPath}/resources/scripts/bootstrap.min.js"></script>
 
         <script src=${contextPath}"/resources/scripts/responsivevoice.js"></script>
-        
+
         <!-- add the jQWidgets framework -->
         <script type="text/javascript" src="${contextPath}/resources/jqwidgets/jqxcore.js"></script>
         <!-- add one or more widgets -->
@@ -53,11 +53,47 @@
         <link rel="stylesheet" href="${contextPath}/resources/jqwidgets/styles/jqx.base.css"
               type="text/css" />
         <link rel="stylesheet"
-              href="${contextPath}/resources/jqwidgets/styles/jqx.darkblue.css" type="text/css" />
+              href="${contextPath}/resources/jqwidgets/styles/jqx.metrodark.css" type="text/css" />
 
         <style type="text/css">
             .custom-link-color{
                 color:whitesmoke;
+            }
+            th {
+                background-color: #616161;
+                color: white;
+            }
+            .jqx-chart-axis-text,
+            .jqx-chart-label-text, 
+            .jqx-chart-legend-text
+            {
+                fill: #fafafa;
+                color: #fafafa;
+                font-size: 12px;
+                font-family: Verdana;
+            }
+            .jqx-chart-axis-description
+            {
+                fill: #fafafa;
+                color: #fafafa;
+                font-size: 12px;
+                font-family: Verdana;
+            }
+            .jqx-chart-title-text
+            {
+                fill: #fafafa;
+                color: #fafafa;
+                font-size: 14px;
+                font-weight: bold;
+                font-family: Verdana;
+            }
+            .jqx-chart-title-description
+            {
+                fill: #fafafa;
+                color: #fafafa;
+                font-size: 13px;
+                font-weight: normal;
+                font-family: Verdana;
             }
         </style>
     </head>
@@ -115,38 +151,40 @@
                         <div class="panel-body">
                             <span class="label label-info" id="bSearchLabel">Latest Block Status</span>
                             <span id="bTotalCoinsDiv">
-                                
+
                             </span>
                             <table class="table table-bordered" style="width:100%">
                                 <tr>
-                                    <th style="width: 30%;color: #336a80;">Height</th>
+                                    <th style="width: 30%;">Height</th>
                                     <td style="color: #2d5768;"><b><span id="bHeight"></span></b></td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 30%;color: #336a80;">Hash</th>
+                                    <th style="width: 30%;">Hash</th>
                                     <td style="color: #2d5768;word-break: break-all;">
-                                        <span id="bHash" class="label label-success"></span>
+                                        <i>
+                                            <a id="bHash" class="label label-success" href="#"></a> 
+                                        </i>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 30%;color: #336a80;">Found</th>
+                                    <th style="width: 30%;">Found</th>
                                     <td style="color: #2d5768;"><b><span id="bFound"></span></b></td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 30%;color: #336a80;">Difficulty</th>
+                                    <th style="width: 30%;">Difficulty</th>
                                     <td style="color: #2d5768;"><b><span id="bDifficulty"></span></b></td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 30%;color: #336a80;">Reward</th>
+                                    <th style="width: 30%;">Reward</th>
                                     <td style="color: #2d5768;"><b><span id="bReward"></span></b>
                                         &nbsp;<small class="label label-warning">TYCH</small></td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 30%;color: #336a80;">Status</th>
+                                    <th style="width: 30%;">Status</th>
                                     <td style="color: #2d5768;"><b><span id="bStatus"></span></b></td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 30%;color: #336a80;">Previous</th>
+                                    <th style="width: 30%;">Previous</th>
                                     <td style="color: #2d5768;word-break: break-all;">
                                         <i>
                                             <a id="bPrevious" class="label label-info" href="#"></a> 

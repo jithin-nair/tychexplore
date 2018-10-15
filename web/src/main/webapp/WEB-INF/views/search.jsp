@@ -59,6 +59,10 @@
             .custom-link-color{
                 color:whitesmoke;
             }
+            th {
+                background-color: #616161;
+                color: white;
+            }
         </style>
     </head>
     <body>
@@ -120,34 +124,36 @@
                             </span>
                             <table class="table table-bordered" style="width:100%">
                                 <tr>
-                                    <th style="width: 30%;color: #336a80;">Height</th>
+                                    <th style="width: 30%;">Height</th>
                                     <td style="color: #2d5768;"><b><span id="bHeight">${bHeight}</span></b></td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 30%;color: #336a80;">Hash</th>
+                                    <th style="width: 30%;">Hash</th>
                                     <td style="color: #2d5768;word-break: break-all;">
-                                        <span id="bHash" class="label label-success">${bHash}</span>
+                                        <i>
+                                            <a id="bHash" class="label label-success" href="${contextPath}/block/tx/${bHash}">${bHash}</a> 
+                                        </i>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 30%;color: #336a80;">Found</th>
+                                    <th style="width: 30%;">Found</th>
                                     <td style="color: #2d5768;"><b><span id="bFound">${bFound}</span></b></td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 30%;color: #336a80;">Difficulty</th>
+                                    <th style="width: 30%;">Difficulty</th>
                                     <td style="color: #2d5768;"><b><span id="bDifficulty">${bDifficulty}</span></b></td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 30%;color: #336a80;">Reward</th>
+                                    <th style="width: 30%;">Reward</th>
                                     <td style="color: #2d5768;"><b><span id="bReward">${bReward}</span></b>
                                         &nbsp;<small class="label label-warning">TYCH</small></td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 30%;color: #336a80;">Status</th>
+                                    <th style="width: 30%;">Status</th>
                                     <td style="color: #2d5768;"><b><span id="bStatus">${bStatus}</span></b></td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 30%;color: #336a80;">Previous</th>
+                                    <th style="width: 30%;">Previous</th>
                                     <td style="color: #2d5768;word-break: break-all;">
                                         <i>
                                             <a id="bPrevious" class="label label-info" href="${contextPath}/block/${bPrevious}">${bPrevious}</a> 
