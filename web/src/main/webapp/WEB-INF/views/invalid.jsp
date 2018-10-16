@@ -50,7 +50,25 @@
                         <li><a href="http://explorer.tychecash.net/" class="custom-link-color"><i class="fa fa-home"></i> Home </a></li>
                         <li><a href="${contextPath}/api" class="custom-link-color" target="_blank"><i class="fa fa-code"></i> API </a></li>
                         <li><a href="http://tychecash.net/#network" class="custom-link-color" target="_blank">
-                                    <i class="fa fa-cloud"></i> Pools </a></li>
+                                <i class="fa fa-cloud"></i> Pools </a></li>
+                        <li><a href="http://tychecash.net/snapshot.tar.gz" class="custom-link-color">
+                                <i class="fa fa-download"></i> Snapshot </a></li>
+                        <li><a href="http://wallet.tychecash.net" class="custom-link-color">
+                                <i class="fa fa-id-card"></i> Web Wallet </a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <div class="navbar-form navbar-left">
+                                <div class="form-group">
+                                    <span class="label label-warning" id="bWarning"></span>
+                                    <input class="form-control mr-sm-2" type="text" name="query" id="query"
+                                           placeholder="Search by block hash/height/tx hash" style="width: 500px;">
+                                </div>
+                                <button class="btn btn-success" id="search" name="search" type="button">
+                                    <i class="fa fa-search"></i> Search
+                                </button>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -71,7 +89,7 @@
                 </div>
             </c:if>
         </div>
-        
+
         <footer class="footer navbar-fixed-bottom navbar-inverse" style="color: whitesmoke;">
             <div class="container-fluid">
                 <span class="pull-left">
