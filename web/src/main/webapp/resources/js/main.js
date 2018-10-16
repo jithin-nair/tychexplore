@@ -26,7 +26,6 @@ $(document).ready(function () {
                     var json = data;
                     $("#bHeight").text(json.result.block_header.height);
                     $("#bHash").text(json.result.block_header.hash);
-                    $("#bHash").attr("href", "block/tx/" + json.result.block_header.hash);
                     $("#bFound").text(new Date(json.result.block_header.timestamp * 1000).toGMTString());
                     $("#bDifficulty").text(json.result.block_header.difficulty);
                     $("#bReward").text(json.result.block_header.reward);
@@ -89,7 +88,6 @@ $(document).ready(function () {
                 title: "Difficulty Graph",
                 description: "Difficulty vs Height",
                 toolTipFormatFunction: toolTipCustomFormatFn(dataAdapter),
-                backgroundColor: "#2e3338",
                 enableAnimations: true,
                 showLegend: true,
                 padding: {left: 15, top: 5, right: 20, bottom: 5},
@@ -124,26 +122,21 @@ $(document).ready(function () {
         $.ajax({
             type: "GET",
             contentType: "application/json",
-            url: "/restapi/getBlockBySearch?query=" + $("#query").val() + "&_=" + new Date().getTime(),
+            url: "/restapi/getBySearch?query=" + $("#query").val() + "&_=" + new Date().getTime(),
             dataType: 'json',
             success: function (data) {
                 var json = data;
-                if (json.result == null) {
+                if (json.status == "FAILED") {
                     $("#bWarning").text("No Result Found");
                     window.setTimeout(function () {
                         $("#bWarning").text("");
-                    }, 3000);
+                    }, 5000);
                 } else {
-                    $("#bHeight").text(json.result.block_header.height);
-                    $("#bHash").text(json.result.block_header.hash);
-                    $("#bHash").attr("href", "block/tx/" + json.result.block_header.hash);
-                    $("#bFound").text(new Date(json.result.block_header.timestamp * 1000).toGMTString());
-                    $("#bDifficulty").text(json.result.block_header.difficulty);
-                    $("#bReward").text(json.result.block_header.reward);
-                    $("#bStatus").text((json.result.block_header.orphan_status === true) ? 'Orphaned' : 'Not Orphaned');
-                    $("#bPrevious").text(json.result.block_header.prev_hash);
-                    $("#bPrevious").attr("href", "block/tx/" + json.result.block_header.prev_hash);
-                    $("#bSearchLabel").text("Search Result");
+                    if (json.type == "block"){
+                        window.open("/block/tx/"+json.query,"_self")
+                    }else{
+                        window.open("/tx/"+json.query,"_self")
+                    }
                 }
             },
             error: function (e) {

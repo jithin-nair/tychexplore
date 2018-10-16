@@ -54,6 +54,8 @@
               type="text/css" />
         <link rel="stylesheet"
               href="${contextPath}/resources/jqwidgets/styles/jqx.metrodark.css" type="text/css" />
+        <link rel="stylesheet"
+              href="${contextPath}/resources/css/style.css" type="text/css" />
 
         <style type="text/css">
             .custom-link-color{
@@ -62,38 +64,6 @@
             th {
                 background-color: #616161;
                 color: white;
-            }
-            .jqx-chart-axis-text,
-            .jqx-chart-label-text, 
-            .jqx-chart-legend-text
-            {
-                fill: #fafafa;
-                color: #fafafa;
-                font-size: 12px;
-                font-family: Verdana;
-            }
-            .jqx-chart-axis-description
-            {
-                fill: #fafafa;
-                color: #fafafa;
-                font-size: 12px;
-                font-family: Verdana;
-            }
-            .jqx-chart-title-text
-            {
-                fill: #fafafa;
-                color: #fafafa;
-                font-size: 14px;
-                font-weight: bold;
-                font-family: Verdana;
-            }
-            .jqx-chart-title-description
-            {
-                fill: #fafafa;
-                color: #fafafa;
-                font-size: 13px;
-                font-weight: normal;
-                font-family: Verdana;
             }
         </style>
     </head>
@@ -149,7 +119,7 @@
                 <div class="col-md-6">
                     <div class="panel panel-primary" style="height:300px">
                         <div class="panel-body">
-                            <span class="label label-info" id="bSearchLabel">Latest Block Status</span>
+                            <span class="label label-large label-yellow arrowed-in-right arrowed-in" id="bSearchLabel">Latest Block Status</span>
                             <span id="bTotalCoinsDiv">
 
                             </span>
@@ -201,6 +171,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
+                    <span class="label label-large label-yellow arrowed-in-right arrowed-in" id="bSearchLabel">Recent Block Details</span>
                     <div id="table"></div>
                 </div>
             </div>
@@ -209,7 +180,7 @@
         <footer class="footer navbar-fixed-bottom navbar-inverse" style="color: whitesmoke;">
             <div class="container-fluid">
                 <span class="pull-left">
-                    <i class="fa fa-copyright"></i> 2018 <a href="http://tyche.cash" target="_blank"><strong>TycheCash</strong></a>
+                    <i class="fa fa-copyright"></i> 2018 <a href="http://tyche.cash" target="_blank"><strong>BlockchainNeXT</strong></a>
                 </span>
                 <span class="pull-right"><i class="fa fa-github"></i>
                     <a href="https://github.com/jithin-nair/tychexplore" target="_blank"><strong>TychExplore</strong></a>

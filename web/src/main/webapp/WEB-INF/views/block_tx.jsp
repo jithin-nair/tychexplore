@@ -51,8 +51,11 @@
         <link rel="stylesheet" href="${contextPath}/resources/jqwidgets/styles/jqx.base.css"
               type="text/css" />
         <link rel="stylesheet"
-              href="${contextPath}/resources/jqwidgets/styles/jqx.darkblue.css" type="text/css" />
+              href="${contextPath}/resources/jqwidgets/styles/jqx.metrodark.css" type="text/css" />
 
+        <link rel="stylesheet"
+              href="${contextPath}/resources/css/style.css" type="text/css" />
+        
         <style type="text/css">
             .custom-link-color{
                 color:whitesmoke;
@@ -60,38 +63,6 @@
             th {
                 background-color: #616161;
                 color: white;
-            }
-            .jqx-chart-axis-text,
-            .jqx-chart-label-text, 
-            .jqx-chart-legend-text
-            {
-                fill: #fafafa;
-                color: #fafafa;
-                font-size: 12px;
-                font-family: Verdana;
-            }
-            .jqx-chart-axis-description
-            {
-                fill: #fafafa;
-                color: #fafafa;
-                font-size: 12px;
-                font-family: Verdana;
-            }
-            .jqx-chart-title-text
-            {
-                fill: #fafafa;
-                color: #fafafa;
-                font-size: 14px;
-                font-weight: bold;
-                font-family: Verdana;
-            }
-            .jqx-chart-title-description
-            {
-                fill: #fafafa;
-                color: #fafafa;
-                font-size: 13px;
-                font-weight: normal;
-                font-family: Verdana;
             }
         </style>
     </head>
@@ -148,7 +119,7 @@
                 <div class="col-md-6">
                     <div class="panel panel-primary" style="height:300px">
                         <div class="panel-body">
-                            <span class="label label-info" id="bSearchLabel">Latest Block Status</span>
+                            <span class="label label-large label-yellow arrowed-in-right arrowed-in" id="bSearchLabel">Latest Block Status</span>
                             <span id="bTotalCoinsDiv">
 
                             </span>
@@ -161,7 +132,7 @@
                                     <th style="width: 30%;">Hash</th>
                                     <td style="color: #2d5768;word-break: break-all;">
                                         <i>
-                                            <a id="bHash" class="label label-success" href="${contextPath}/block/tx/${bHash}">${bHash}</a> 
+                                            <a id="bHash" class="label label-success" href="#">${bHash}</a> 
                                         </i>
                                     </td>
                                 </tr>
@@ -202,7 +173,7 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-body">
-                            <span class="label label-info" id="bSearchLabel">Block Transaction Details</span>
+                            <span class="label label-large label-yellow arrowed-in-right arrowed-in" id="bSearchLabel">Block Transaction Details</span>
                             <span id="bTotalCoinsDiv">
 
                             </span>
@@ -244,7 +215,7 @@
                                                         <td style="color: #2d5768;"><b>
                                                                 <span id="txHash_${loop.index+1}">
                                                                     <i>
-                                                                        <a id="bPrevious" class="label label-primary" href="${contextPath}/tx/<c:out value="${hashes}" />"><c:out value="${hashes}" /></a> 
+                                                                        <a id="bPrevious" class="label label-pink" href="${contextPath}/tx/<c:out value="${hashes}" />"><c:out value="${hashes}" /></a> 
                                                                     </i>
                                                                 </span></b>
                                                         </td>
@@ -423,7 +394,6 @@
                         title: "Difficulty Graph",
                         description: "Difficulty vs Height",
                         toolTipFormatFunction: toolTipCustomFormatFn(dataAdapter),
-                        backgroundColor: "#2e3338",
                         enableAnimations: true,
                         showLegend: true,
                         padding: {left: 15, top: 5, right: 20, bottom: 5},
@@ -451,32 +421,26 @@
 
                 }
             });
-
-
-
+            
             $("#search").click(function () {
                 $.ajax({
                     type: "GET",
                     contentType: "application/json",
-                    url: "/restapi/getBlockBySearch?query=" + $("#query").val() + "&_=" + new Date().getTime(),
+                    url: "/restapi/getBySearch?query=" + $("#query").val() + "&_=" + new Date().getTime(),
                     dataType: 'json',
                     success: function (data) {
                         var json = data;
-                        if (json.result == null) {
+                        if (json.status == "FAILED") {
                             $("#bWarning").text("No Result Found");
                             window.setTimeout(function () {
                                 $("#bWarning").text("");
-                            }, 3000);
+                            }, 5000);
                         } else {
-                            $("#bHeight").text(json.result.block_header.height);
-                            $("#bHash").text(json.result.block_header.hash);
-                            $("#bFound").text(new Date(json.result.block_header.timestamp * 1000).toGMTString());
-                            $("#bDifficulty").text(json.result.block_header.difficulty);
-                            $("#bReward").text(json.result.block_header.reward);
-                            $("#bStatus").text((json.result.block_header.orphan_status === true) ? 'Orphaned' : 'Not Orphaned');
-                            $("#bPrevious").text(json.result.block_header.prev_hash);
-                            $("#bPrevious").attr("href", json.result.block_header.prev_hash);
-                            $("#bSearchLabel").text("Search Result");
+                            if (json.type == "block") {
+                                window.open("/block/tx/" + json.query, "_self")
+                            } else {
+                                window.open("/tx/" + json.query, "_self")
+                            }
                         }
                     },
                     error: function (e) {
@@ -484,7 +448,6 @@
                     }
                 });
             });
-
 
         });
 

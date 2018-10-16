@@ -51,8 +51,11 @@
         <link rel="stylesheet" href="${contextPath}/resources/jqwidgets/styles/jqx.base.css"
               type="text/css" />
         <link rel="stylesheet"
-              href="${contextPath}/resources/jqwidgets/styles/jqx.darkblue.css" type="text/css" />
+              href="${contextPath}/resources/jqwidgets/styles/jqx.metrodark.css" type="text/css" />
 
+        <link rel="stylesheet"
+              href="${contextPath}/resources/css/style.css" type="text/css" />
+        
         <style type="text/css">
             .custom-link-color{
                 color:whitesmoke;
@@ -116,7 +119,7 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-body">
-                            <span class="label label-info" id="bSearchLabel">Block Transaction Details</span>
+                            <span class="label label-large label-yellow arrowed-in-right arrowed-in" id="bSearchLabel">Block Transaction Details</span>
                             <table class="table table-bordered" style="width:100%">
                                 <tr>
                                     <th style="width: 12%;">Hex</th>
@@ -229,30 +232,25 @@
     <script>
         $(document).ready(function () {
 
-
             $("#search").click(function () {
                 $.ajax({
                     type: "GET",
                     contentType: "application/json",
-                    url: "/restapi/getBlockBySearch?query=" + $("#query").val() + "&_=" + new Date().getTime(),
+                    url: "/restapi/getBySearch?query=" + $("#query").val() + "&_=" + new Date().getTime(),
                     dataType: 'json',
                     success: function (data) {
                         var json = data;
-                        if (json.result == null) {
+                        if (json.status == "FAILED") {
                             $("#bWarning").text("No Result Found");
                             window.setTimeout(function () {
                                 $("#bWarning").text("");
-                            }, 3000);
+                            }, 5000);
                         } else {
-                            $("#bHeight").text(json.result.block_header.height);
-                            $("#bHash").text(json.result.block_header.hash);
-                            $("#bFound").text(new Date(json.result.block_header.timestamp * 1000).toGMTString());
-                            $("#bDifficulty").text(json.result.block_header.difficulty);
-                            $("#bReward").text(json.result.block_header.reward);
-                            $("#bStatus").text((json.result.block_header.orphan_status === true) ? 'Orphaned' : 'Not Orphaned');
-                            $("#bPrevious").text(json.result.block_header.prev_hash);
-                            $("#bPrevious").attr("href", json.result.block_header.prev_hash);
-                            $("#bSearchLabel").text("Search Result");
+                            if (json.type == "block") {
+                                window.open("/block/tx/" + json.query, "_self")
+                            } else {
+                                window.open("/tx/" + json.query, "_self")
+                            }
                         }
                     },
                     error: function (e) {
@@ -260,8 +258,6 @@
                     }
                 });
             });
-
-
         });
 
         //Converts timestamp from server side to GMT String equivalent

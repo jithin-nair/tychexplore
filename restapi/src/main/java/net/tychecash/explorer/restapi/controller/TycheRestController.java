@@ -7,13 +7,16 @@ package net.tychecash.explorer.restapi.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.tychecash.explorer.restapi.service.RestApiService;
 import net.tychecash.explorer.service.model.ResponseVO;
+import net.tychecash.explorer.service.model.response.SearchResponse;
 import net.tychecash.explorer.service.model.response.block.BlockResponse;
+import net.tychecash.explorer.service.model.response.tx.TransactionResponse;
 import net.tychecash.explorer.service.service.TycheExploreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,6 +54,59 @@ public class TycheRestController {
         } catch (NumberFormatException exception) {
             BlockResponse blockResponse = tycheExploreService.getBlockResponseByHash(query);
             return blockResponse;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getBySearch")
+    public SearchResponse getBySearch(@RequestParam("query") String query) {
+        SearchResponse searchResponse = new SearchResponse();
+        if (query.length() > 64) {
+            searchResponse.setType("query");
+            searchResponse.setQuery(query);
+            searchResponse.setStatus("FAILED");
+            return searchResponse;
+        }
+        try {
+            BigInteger height = new BigInteger(query);
+            BigInteger topHeight = new BigInteger(tycheExploreService.getLastBlockResponse().getResult().getBlock_header().getHeight().toString());
+            if (height.compareTo(topHeight)==-1) {
+                BlockResponse blockResponse = tycheExploreService.getBlockResponseByHeight(height.intValue());
+                searchResponse.setType("block");
+                searchResponse.setQuery(blockResponse.getResult().getBlock_header().getHash());
+                searchResponse.setStatus("SUCCESS");
+            } else {
+                searchResponse.setType("block");
+                searchResponse.setQuery(query);
+                searchResponse.setStatus("FAILED");
+            }
+            return searchResponse;
+        } catch (NumberFormatException exception) {
+            BlockResponse blockResponse = tycheExploreService.getBlockResponseByHash(query);
+            if (blockResponse.getResult() == null) {
+                try {
+                    TransactionResponse transactionResponse = tycheExploreService.getTransactionResponseByHash(query);
+                    if (transactionResponse == null) {
+                        searchResponse.setType("tx");
+                        searchResponse.setQuery(query);
+                        searchResponse.setStatus("FAILED");
+                        return searchResponse;
+                    }
+                    searchResponse.setType("tx");
+                    searchResponse.setQuery(query);
+                    searchResponse.setStatus("SUCCESS");
+                    return searchResponse;
+                } catch (Exception ex) {
+                    searchResponse.setType("block");
+                    searchResponse.setQuery(query);
+                    searchResponse.setStatus("FAILED");
+                    return searchResponse;
+                }
+            }
+            searchResponse.setType("block");
+            searchResponse.setQuery(blockResponse.getResult().getBlock_header().getHash());
+            searchResponse.setStatus("SUCCESS");
+            return searchResponse;
         }
     }
 
