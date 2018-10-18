@@ -41,6 +41,9 @@ public class TycheWebController {
     @RequestMapping(value = "/block/{hash}", method = RequestMethod.GET)
     public ModelAndView getBlock(ModelAndView modelAndView, @PathVariable("hash") String hash) {
         try {
+            if(hash.length()>64){
+                throw new RuntimeException();
+            }
             BlockResponse blockResponse = tycheExploreService.getBlockResponseByHash(hash);
             modelAndView.addObject("bHeight", blockResponse.getResult().getBlock_header().getHeight());
             modelAndView.addObject("bHash", blockResponse.getResult().getBlock_header().getHash());
@@ -61,6 +64,9 @@ public class TycheWebController {
     @RequestMapping(value = "/block/tx/{hash}", method = RequestMethod.GET)
     public ModelAndView getBlockTransaction(ModelAndView modelAndView, @PathVariable("hash") String hash) {
         try {
+            if(hash.length()>64){
+                throw new RuntimeException();
+            }
             BlockResponse blockResponse = tycheExploreService.getBlockResponseByHash(hash);
             BlockTransactionResponse blockTransactionResponse = tycheExploreService.getBlockTransactionResponseByHash(hash);
             modelAndView.addObject("bHeight", blockResponse.getResult().getBlock_header().getHeight());
@@ -84,6 +90,9 @@ public class TycheWebController {
     @RequestMapping(value = "/tx/{hash}", method = RequestMethod.GET)
     public ModelAndView getTransaction(ModelAndView modelAndView, @PathVariable("hash") String hash) {
         try {
+            if(hash.length()>64){
+                throw new RuntimeException();
+            }
             TransactionResponse transactionResponse = tycheExploreService.getTransactionResponseByHash(hash);
             modelAndView.addObject("transactionResponse", transactionResponse);
             modelAndView.addObject("transactionInVOs", tycheExploreService.getTransactionsVinByTransactionResponse(transactionResponse));

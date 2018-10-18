@@ -5,8 +5,11 @@
  */
 package net.tychecash.explorer.scheduler.jobs;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -71,6 +74,8 @@ public class RecentTychBlockRequestJob extends QuartzJobBean implements Interrup
 
                 net.tychecash.explorer.common.model.response.BlockResponse response = null;
                 ObjectMapper mapper = new ObjectMapper();
+                mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+                mapper.setVisibilityChecker(VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
                 try {
                     String pureJson = mapper.writeValueAsString(blockResponse);
                     response = mapper.readValue(pureJson, net.tychecash.explorer.common.model.response.BlockResponse.class);
