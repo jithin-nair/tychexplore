@@ -185,7 +185,7 @@
         <footer class="footer navbar-fixed-bottom navbar-inverse" style="color: whitesmoke;">
             <div class="container-fluid">
                 <span class="pull-left">
-                    <i class="fa fa-copyright"></i> 2018 <a href="http://tyche.cash" target="_blank"><strong>TycheCash</strong></a>
+                    <i class="fa fa-copyright"></i> 2018 <a href="http://tyche.cash" target="_blank"><strong>BlockchainNeXT</strong></a>
                 </span>
                 <span class="pull-right"><i class="fa fa-github"></i>
                     <a href="https://github.com/jithin-nair/tychexplore" target="_blank"><strong>TychExplore</strong></a>
